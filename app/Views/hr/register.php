@@ -342,7 +342,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                             </div>
-                            <input type="text" class="form-control input-startDate" id="input-startDate" name="startDate" value="<?php echo date("Y-m-d"); ?>">
+                            <input type="text" class="form-control input-startDate" id="input-startDate" name="startDate" value="<?= date("Y-m-d"); ?>">
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-2">

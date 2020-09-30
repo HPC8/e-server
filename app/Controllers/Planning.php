@@ -43,8 +43,95 @@ class Planning extends BaseController
             ];
 
             $data['breadcrumb'] = $breadcrumb;
-            $data['listUser'] = $this->hrModel->getListings();
+            $data['userList'] = $this->hrModel->getListings();
             return view('planning/training/create', $data);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function trainingAdd()
+    {
+        helper(['form']);
+        $data = [];
+        $json = [];
+
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+
+            $letter = $this->request->getVar('letter');
+            $createDate = $this->request->getVar('createDate');
+            $hospcode = $this->request->getVar('hospcode');
+            $reportHospcode = $this->request->getVar('reportHospcode');
+            $subject = $this->request->getVar('subject');
+            $location = $this->request->getVar('location');
+            $form = $this->request->getVar('form');
+            $startDate = $this->request->getVar('startDate');
+            $endDate = $this->request->getVar('endDate');
+            $startTravel = $this->request->getVar('startTravel');
+            $endTravel = $this->request->getVar('endTravel');
+
+
+            if (empty(trim($letter))) {
+                $json['error']['letter'] = 'กรุณาระบุเลขที่หนังสือขออนุมัติ';
+            }
+            if (empty(trim($createDate))) {
+                $json['error']['createDate'] = 'กรุณาระบุวันที่ขออนุมัติ';
+            }
+            if (empty(trim($subject))) {
+                $json['error']['subject'] = 'กรุณาระบุข้อมูล ';
+            }
+            if (empty(trim($location))) {
+                $json['error']['location'] = 'กรุณาระบุข้อมูล ';
+            }
+            if (empty(trim($form))) {
+                $json['error']['form'] = 'กรุณาระบุข้อมูล ';
+            }
+            if (empty(trim($startDate))) {
+                $json['error']['startDate'] = 'กรุณาระบุช่วงวันที่มีราชการ';
+            }
+            if (empty(trim($endDate))) {
+                $json['error']['startDate'] = 'กรุณาระบุช่วงวันที่มีราชการ';
+            }
+            if (empty(trim($startTravel))) {
+                $json['error']['startTravel'] = 'กรุณาระบุช่วงวันที่ขออนุมัติเดินทาง';
+            }
+            if (empty(trim($endTravel))) {
+                $json['error']['startTravel'] = 'กรุณาระบุช่วงวันที่ขออนุมัติเดินทาง';
+            }
+
+
+            // $data = [
+            //     'plan_year' => $planYear,
+            //     'plan_name' => $planName,
+            //     'created' => date("Y-m-d H:i:s"),
+            //     'created_code' => $data['user']['hospcode'],
+            // ];
+
+            try {
+                // $lastId = $this->projectModel->createPlan($data);
+            } catch (\Exception $e) {
+                die($e->getMessage());
+            }
+
+            // if (!empty($lastId)) {
+            //     $sms = array(
+            //         'msg' => 0,
+            //         'info' => 'คุณได้ทำการเพิ่มข้อมูลเรียบร้อย',
+            //     );
+            //     session()->set($sms);
+            // } else {
+            //     $sms = array(
+            //         'msg' => 1,
+            //         'info' => 'ระบบไม่สามารถทำการเพิ่มข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบครับ!',
+            //     );
+
+            //     session()->set($sms);
+            // }
+
+
+
+            echo json_encode($json);
         } else {
             return redirect('auth');
         }
