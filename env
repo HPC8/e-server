@@ -49,11 +49,11 @@ app.baseURL = 'https://apps.anamai.moph.go.th/e-service/'
 # DATABASE
 #--------------------------------------------------------------------
 
- database.default.hostname = 172.16.100.1
- database.default.database = e-service
- database.default.username = administrator
- database.default.password = anamai#hpc8
- database.default.DBDriver = MySQLi
+ #database.default.hostname = 172.16.100.1
+ #database.default.database = e-service
+ #database.default.username = 
+ #database.default.password = 
+ #database.default.DBDriver = MySQLi
 
 # database.tests.hostname = localhost
 # database.tests.database = ci4

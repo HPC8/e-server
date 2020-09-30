@@ -33,8 +33,8 @@ class Database extends \CodeIgniter\Database\Config
 	public $default = [
 		'DSN'      => '',
 		'hostname' => '172.16.100.1',
-		'username' => 'administrator',
-		'password' => 'anamai#hpc8',
+		'username' => 'apps.hpc8',
+		'password' => 'pass.apps@hpc08',
 		'database' => 'e-service',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
