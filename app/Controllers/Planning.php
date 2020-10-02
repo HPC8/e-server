@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\HrModel;
+use App\Models\PlanningModel;
+use App\Libraries\Thaidate;
 
 class Planning extends BaseController
 {
@@ -11,6 +13,8 @@ class Planning extends BaseController
     {
         $this->userModel = new UserModel();
         $this->hrModel = new HrModel();
+        $this->planningModel = new PlanningModel();
+        $this->thaidate = new Thaidate();
     }
     public function training()
     {
@@ -62,7 +66,7 @@ class Planning extends BaseController
             $letter = $this->request->getVar('letter');
             $createDate = $this->request->getVar('createDate');
             $hospcode = $this->request->getVar('hospcode');
-            $reportHospcode = $this->request->getVar('reportHospcode');
+            $reportHospcode = $this->request->getVar('hospcode');
             $subject = $this->request->getVar('subject');
             $location = $this->request->getVar('location');
             $form = $this->request->getVar('form');
@@ -99,42 +103,184 @@ class Planning extends BaseController
             if (empty(trim($endTravel))) {
                 $json['error']['startTravel'] = 'กรุณาระบุช่วงวันที่ขออนุมัติเดินทาง';
             }
-
-
-            // $data = [
-            //     'plan_year' => $planYear,
-            //     'plan_name' => $planName,
-            //     'created' => date("Y-m-d H:i:s"),
-            //     'created_code' => $data['user']['hospcode'],
-            // ];
-
-            try {
-                // $lastId = $this->projectModel->createPlan($data);
-            } catch (\Exception $e) {
-                die($e->getMessage());
+            if ($startDate > $endDate) {
+                $json['error']['startDate'] = 'ช่วงวันที่มีราชการไม่ถูกต้อง';
+            }
+            if ($startTravel > $endTravel) {
+                $json['error']['startTravel'] = 'ช่วงวันที่ขออนุมัติเดินทางไม่ถูกต้อง';
             }
 
-            // if (!empty($lastId)) {
-            //     $sms = array(
-            //         'msg' => 0,
-            //         'info' => 'คุณได้ทำการเพิ่มข้อมูลเรียบร้อย',
-            //     );
-            //     session()->set($sms);
-            // } else {
-            //     $sms = array(
-            //         'msg' => 1,
-            //         'info' => 'ระบบไม่สามารถทำการเพิ่มข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบครับ!',
-            //     );
+            if (empty($json['error'])) {
+                $year = $this->thaidate->fiscalYear(date("Y-m-d"));
+                $count = $this->planningModel->countTraining($year);
 
-            //     session()->set($sms);
-            // }
+                $data = [
+                    'letter' => $letter,
+                    'createDate' => $createDate,
+                    'hospcode' => $hospcode,
+                    'reportHospcode' => $reportHospcode,
+                    'subject' => $subject,
+                    'location' => $location,
+                    'form' => $form,
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'startTravel' => $startTravel,
+                    'endTravel' => $endTravel,
+                    'trainDoc' => $year . "/" . ($count + 1),
+                    'create' => date("Y-m-d H:i:s"),
 
+                ];
 
+                try {
+                    $lastId = $this->planningModel->createTraining($data);
+                    $json['lastId'] = $lastId;
+                } catch (\Exception $e) {
+                    die($e->getMessage());
+                }
+
+                if (!empty($lastId)) {
+
+                    $data = [
+                        'trainID' => $lastId,
+                        'hospcode' => $this->request->getVar('userList'),
+                        'status' => $this->request->getVar('userStatus'),
+                        'doc' => $this->request->getVar('userDoc'),
+                        'create' => date("Y-m-d H:i:s"),
+                    ];
+                    $this->planningModel->insertTrainingUser($data);
+
+                    $data = [
+                        'trainID' => $lastId,
+                        'allowance' => $this->request->getVar('allowance'),
+                        'hotel' => $this->request->getVar('hotel'),
+                        'traveling' => $this->request->getVar('traveling'),
+                        'oilPrice' => $this->request->getVar('oilPrice'),
+                        'otherValues' => $this->request->getVar('otherValues'),
+                        'modified' => date("Y-m-d H:i:s")
+                    ];
+                    $this->planningModel->insertTrainingExpenses($data);
+                    $sms = array(
+                        'msg' => 0,
+                        'info' => 'คุณได้ทำการบันข้อมูลเรียบร้อย',
+                    );
+                    session()->set($sms);
+                } else {
+                    $sms = array(
+                        'msg' => 1,
+                        'info' => 'ระบบไม่สามารถทำการเบันข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบครับ!',
+                    );
+                    session()->set($sms);
+                }
+            }
 
             echo json_encode($json);
         } else {
             return redirect('auth');
         }
+    }
+
+    public function trainingEdit($id = '')
+    {
+        $data = [];
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+            $data['title'] = 'ขออนุมัติไปราชการ';
+            $breadcrumb = [
+                "Home" => "/e-service/public/",
+                "ขออนุมัติไปราชการ" => ""
+            ];
+
+            $data['breadcrumb'] = $breadcrumb;
+
+
+            $data['userList'] = $this->hrModel->getListings();
+            $data['trainingInfo'] = $this->planningModel->getTraining($id);
+            $data['trainingReport'] = $this->planningModel->trainingReport($id);
+            $data['trainingUser'] = $this->planningModel->trainingUser($id);
+            $data['trainingExpenses'] = $this->planningModel->trainingExpenses($id);
+            $data['trainingStatus'] = $this->planningModel->trainingStatus();
+
+            // echo '<pre>';
+            // print_r($data);
+            // echo '</pre>';
+            // exit;
+            return view('planning/training/edit', $data);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function trainingAddUser()
+    {
+        helper(['form']);
+        $data = [];
+        $json = [];
+
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+
+            $trainId = $this->request->getVar('trainId');
+            $userList = $this->request->getVar('userList');
+            $status = $this->request->getVar('status');
+            $doc = $this->request->getVar('doc');
+            $checkUser = $this->planningModel->trainingCheckUser($trainId, $userList);
+
+            if (empty(trim($userList))) {
+                $json['error']['userList'] = 'กรุณาระบุชื่อผู้ไปราชการ';
+            }
+            if (!empty($checkUser)) {
+                $json['error']['userList'] = 'มีรายชื่อผู้ไปราชการแล้ว ไม่สามารถใส่ซ้ำได้!';
+            }
+            if (empty(trim($status))) {
+                $json['error']['status'] = 'กรุณาระบุสถานะ';
+            }
+
+            if (empty($json['error'])) {
+                $data = [
+                    'trainID' => $trainId,
+                    'hospcode' => $userList,
+                    'status' => $status,
+                    'doc' => $doc,
+                    'create' => date("Y-m-d H:i:s"),
+                ];
+
+                try {
+                    $lastId = $this->planningModel->trainingCreateUser($data);
+                } catch (\Exception $e) {
+                    die($e->getMessage());
+                }
+            }
+
+            echo json_encode($json);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function trainingTrashUser()
+    {
+        $json = [];
+
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+            $id = $this->request->getVar('id');
+            $this->planningModel->trainingDeleteUser($id);
+            echo json_encode($json);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function demo()
+    {
+        $id = 16;
+        $hospcode = 10005;
+        $data = $this->planningModel->trainingCheckUser($id, $hospcode);
+
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+        exit;
     }
 
     public function meeting()

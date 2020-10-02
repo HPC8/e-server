@@ -14,7 +14,7 @@
 </div>
 
 <div class="card bcard  border-t-3 brc-blue-m2">
-    <table id="tbl-listings" class="table table-striped table-bordered brc-black-tp11 collapsed  display responsive" width="100%">
+    <table id="tbl-listings" class="table table-striped table-bordered brc-black-tp11 collapsed display responsive" width="100%">
 
         <thead class="text-primary-d2 text-100">
             <tr>

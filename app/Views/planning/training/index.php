@@ -17,6 +17,17 @@
     </div>
 </div>
 
+<?php
+if (session('msg') == '1') { { ?>
+        <a id="alerts-auto" data-toggle="modal" data-target="#alerts-modal"></a>
+    <?php }
+} elseif (session('msg') == '0') { ?>
+    <a id="success-auto" data-toggle="modal" data-target="#success-modal"></a>
+<?php }
+?>
 
+<?php
+echo view('planning/alert');
+?>
 
 <?= $this->endSection() ?>

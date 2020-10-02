@@ -75,6 +75,7 @@
 
 
 <!-- "Dashboard 4" page script to enable its demo functionality -->
+<script src="./application/views/default/pages/partials/config/@page-script.js"></script>
 <script src="./application/views/default/pages/partials/dashboard-4/@page-script.js"></script>
 <script src="./application/views/default/pages/partials/hr/@page-script.js"></script>
 <script src="./application/views/default/pages/partials/users/@page-script.js"></script>
