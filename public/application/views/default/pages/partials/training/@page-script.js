@@ -42,6 +42,61 @@
     });
   });
 
+  function addTraining() {
+    $.aceToaster.add({
+      placement: 'tr',
+      body: "<div class='d-flex'>\
+              <div class='bgc-success-d1 text-white px-3 pt-3'>\
+                  <div class='border-2 brc-white px-3 py-25 radius-round'>\
+                      <i class='fa fa-check text-150'></i>\
+                  </div>\
+              </div>\
+              <div class='p-3 mb-0 flex-grow-1'>\
+                  <h4 class='text-130'>Success </h4>\
+                  เพิ่มรายชื่อผู้ไปราชการเรียบร้อย ...\
+              </div>\
+              <button data-dismiss='toast' class='align-self-start btn btn-xs btn-outline-grey btn-h-light-grey py-2px mr-1 mt-1 border-0 text-150'>&times;</button></div>\
+             </div>",
+          
+      width: 420,
+      delay: 5000,
+
+      close: false,
+
+      className: 'bgc-white-tp1 shadow border-0',
+
+      bodyClass: 'border-0 p-0 text-dark-tp2',
+      headerClass: 'd-none',
+  })
+  }
+
+  function trashTraining() {
+    $.aceToaster.add({
+      placement: 'tr',
+      body: "<div class='d-flex'>\
+              <div class='bgc-danger-d1 text-white px-3 pt-3'>\
+                  <div class='border-2 brc-white px-3 py-25 radius-round'>\
+                      <i class='fa fa-times text-150'></i>\
+                  </div>\
+              </div>\
+              <div class='p-3 mb-0 flex-grow-1'>\
+                  <h4 class='text-130'>Alert</h4>\
+                  ลบรายชื่อผู้ไปราชการเรียบร้อย ...\
+              </div>\
+              <button data-dismiss='toast' class='align-self-start btn btn-xs btn-outline-grey btn-h-light-grey py-2px mr-1 mt-1 border-0 text-150'>&times;</button></div>\
+             </div>",
+          
+      width: 420,
+      delay: 5000,
+
+      close: false,
+
+      className: 'bgc-white-tp1 shadow border-0',
+
+      bodyClass: 'border-0 p-0 text-dark-tp2',
+      headerClass: 'd-none',
+  })
+  }
 
   //datetimepicker วันที่ขออนุมัติเดินทาง
   jQuery(function () {
@@ -161,8 +216,8 @@
             }
           }
         } else {
-
-          jQuery('span#success-msg').html('<div class="alert d-flex bgc-green-l4 brc-green-m4 border-1 border-l-0 pl-3 radius-l-0" role="alert"><div class="position-tl h-102 border-l-4 brc-green mt-n1px"></div><i class="fa fa-check mr-3 text-140 text-green"></i><span class="align-self-center text-green-d2 text-100">เพิ่มรายชื่อผู้ไปราชการเรียบร้อย ...</span></div>');
+          //jQuery('span#success-msg').html('<div class="alert d-flex bgc-green-l4 brc-green-m4 border-1 border-l-0 pl-3 radius-l-0" role="alert"><div class="position-tl h-102 border-l-4 brc-green mt-n1px"></div><i class="fa fa-check mr-3 text-140 text-green"></i><span class="align-self-center text-green-d2 text-100">เพิ่มรายชื่อผู้ไปราชการเรียบร้อย ...</span></div>');
+          addTraining();
           setTimeout(function () {
             window.location.reload(true);
           }, 1000);
@@ -201,7 +256,8 @@
         jQuery('#trash-user').modal('hide');
       },
       success: function (json) {
-        jQuery('span#success-msg').html('<div class="alert d-flex bgc-red-l4 brc-red-m4 border-1 border-l-0 pl-3 radius-l-0" role="alert"><div class="position-tl h-102 border-l-4 brc-red mt-n1px"></div><i class="fa fa-trash-alt mr-3 text-140 text-danger-m1"></i><span class="align-self-center text-danger-d2 text-100">ลบรายชื่อผู้ไปราชการเรียบร้อย ...</span></div>');
+        //jQuery('span#success-msg').html('<div class="alert d-flex bgc-red-l4 brc-red-m4 border-1 border-l-0 pl-3 radius-l-0" role="alert"><div class="position-tl h-102 border-l-4 brc-red mt-n1px"></div><i class="fa fa-trash-alt mr-3 text-140 text-danger-m1"></i><span class="align-self-center text-danger-d2 text-100">ลบรายชื่อผู้ไปราชการเรียบร้อย ...</span></div>');
+        trashTraining();
         setTimeout(function () {
           window.location.reload(true);
         }, 1000);
@@ -211,3 +267,161 @@
       }
     });
   });
+
+  // update training
+  jQuery(document).on('click', 'button#update-training', function () {
+    jQuery.ajax({
+      type: 'POST',
+      url: baseurl + 'planning/trainingUpdate',
+      data: jQuery("form#update-training-form").serialize(),
+      dataType: 'json',
+
+      success: function (json) {
+
+        //console.log(json);
+        $('.text-danger').remove();
+        if (json['error']) {
+          for (i in json['error']) {
+            var element = $('.train-' + i.replace('_', '-'));
+            if ($(element).parent().hasClass('input-group')) {
+              $(element).parent().after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            } else {
+              $(element).after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            }
+          }
+        } else {
+          jQuery('#loading-modal').modal();
+          setTimeout(function () {
+            window.location.reload(true);
+            //location.replace(baseurl + "planning/training")
+          }, 3000);
+
+          jQuery('form#update-training-form').find('textarea, input').each(function () {
+            jQuery(this).val('');
+          });
+          jQuery('#update-training').modal('hide');
+
+        }
+
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+  // confirm training
+  jQuery(document).on('click', 'button#confirm-training', function () {
+    jQuery.ajax({
+      type: 'POST',
+      url: baseurl + 'planning/trainingConfirm',
+      data: jQuery("form#update-training-form").serialize(),
+      dataType: 'json',
+
+      success: function (json) {
+
+        //console.log(json);
+        $('.text-danger').remove();
+        if (json['error']) {
+          for (i in json['error']) {
+            var element = $('.train-' + i.replace('_', '-'));
+            if ($(element).parent().hasClass('input-group')) {
+              $(element).parent().after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            } else {
+              $(element).after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            }
+          }
+        } else {
+          jQuery('#loading-modal').modal();
+          setTimeout(function () {
+            location.replace(baseurl + "planning/training")
+          }, 3000);
+
+          jQuery('form#update-training-form').find('textarea, input').each(function () {
+            jQuery(this).val('');
+          });
+          jQuery('#confirm-training').modal('hide');
+
+        }
+
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+  $(document).ready(function () {
+    var table = $('#tbl-training').DataTable({
+      responsive: true,
+      scrollX: true,
+      iDisplayLength: 25,
+      processing: true,
+      serverSide: true,
+      order: [],
+      ajax: {
+        url: baseurl + 'planning/ajaxTraining',
+        type: 'POST'
+      },
+      //optional
+      lengthMenu: [
+        [5, 10, 25, 50, 100],
+        [5, 10, 25, 50, 100]
+      ],
+      columnDefs: [{
+          targets: 0,
+          className: "text-center",
+          width: "14%"
+        },
+        {
+          targets: 1,
+          className: "text-left",
+          width: "40%"
+        },
+        {
+          targets: 2,
+          className: "text-left",
+          width: "18%"
+        },
+        {
+          responsivePriority: 4,
+          targets: 3,
+          className: "text-center",
+          width: "18%",
+        },
+        {
+          responsivePriority: 3,
+          targets: 4,
+          className: "text-left",
+          width: "0%",
+        },
+        {
+          responsivePriority: 2,
+          targets: 5,
+          className: "text-left",
+          width: "0%",
+        },
+        {
+          responsivePriority: 1,
+          targets: 5,
+          className: "text-left",
+          width: "0%",
+        },
+        {
+          targets: 7,
+          className: "text-center",
+          width: "10%"
+        }
+      ],
+  
+  
+      // columnDefs: [{
+      //   // "targets": [],
+      //   // "orderable": false, 
+      //   orderable: false,
+      //   className: null,
+      //   targets: -1
+      // }, ],
+    });
+  });
+  

@@ -115,4 +115,20 @@ class PlanningModel extends Model
         $builder->where('id', $id);
         $builder->delete();
     }
+
+    public function trainingUpdate($data, $trainId)
+    {
+        $builder = $this->db->table($this->tblTraining);
+        $builder->where('trainId', $trainId);
+        $builder->update($data);
+        return $this->affectedRows();
+    }
+
+    public function trainingExpensesUpdate($data, $trainId)
+    {
+        $builder = $this->db->table($this->tblTrainingExpenses);
+        $builder->where('trainId', $trainId);
+        $builder->update($data);
+        return $this->affectedRows();
+    }
 }

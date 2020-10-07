@@ -183,7 +183,6 @@
                     <i class="fas fa-info-circle"></i> รายชื่อผู้ไปราชการ
                 </p>
 
-                <span id="success-msg"></span>
                 <div class="form-group row">
                     <div class="col-sm-2 col-form-label text-sm-right pr-0">
                         <label for="train-startDate" class="mb-0">
@@ -352,10 +351,8 @@
                             <i class="far fa-save text-120 mr-1"></i>
                             บันทึกข้อมูล
                         </button>
-                        <button type="button" id="update-training" class="btn btn-warning border-2 brc-black-tp10 radius-round px-3 mb-1">
-                        <!-- <button type="reset" class="btn btn-success border-2 brc-black-tp10 radius-round px-3 mb-1"> -->
-                        <i class="far fa-check-square text-120 mr-1"></i>
-
+                        <button type="button" id="confirm-training" class="btn btn-success border-2 brc-black-tp10 radius-round px-3 mb-1">
+                            <i class="far fa-check-square text-120 mr-1"></i>
                             ยืนยันข้อมูล
                         </button>
                     </div>
