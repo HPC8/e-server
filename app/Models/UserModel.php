@@ -10,6 +10,8 @@ class UserModel extends Model
     protected $_employee = 'view_tbl_employee';
     protected $_adminHr = 'tbl_user_hr';
     protected $_adminProject = 'tbl_user_project';
+    protected $_adminPlanning = 'tbl_user_planning';
+    
 
     public function checkCode($id)
     {
@@ -73,6 +75,14 @@ class UserModel extends Model
     {
         $builder = $this->db->table($this->_employee);
         $builder->where('hospcode', $hospcode);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+
+    public function adminPlanning($id)
+    {
+        $builder = $this->db->table($this->_adminPlanning);
+        $builder->where('hospcode', $id);
         $query = $builder->get();
         return $query->getRowArray();
     }

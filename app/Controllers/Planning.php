@@ -185,6 +185,7 @@ class Planning extends BaseController
         $data = [];
         if (session('isLoggedIn')) {
             $data['user'] = $this->userModel->getUser(session('userId'));
+            $data['admin'] = $this->userModel->adminPlanning($data['user']['hospcode']);
             $data['title'] = 'ขออนุมัติไปราชการ';
             $breadcrumb = [
                 "Home" => "/e-service/public/",
@@ -209,7 +210,28 @@ class Planning extends BaseController
                             'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
                         );
                         session()->set($sms);
-                        return redirect()->to(base_url('planning/training'));
+                        return redirect('training');
+                    }
+                } elseif ($data['trainingInfo']['trainStatus'] == "2") {
+                    if (!empty($data['admin'])) {
+                        if ($data['admin']['level'] == "2") {
+                            echo 'ตรวจแผน';
+                        } else {
+                            $sms = array(
+                                'msg' => 1,
+                                'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
+                            );
+                            session()->set($sms);
+                            return redirect('training');
+                        }
+
+                    } else {
+                        $sms = array(
+                            'msg' => 1,
+                            'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
+                        );
+                        session()->set($sms);
+                        return redirect('training');
                     }
                 } else {
                     $sms = array(
@@ -217,7 +239,8 @@ class Planning extends BaseController
                         'info' => 'ใบงานนี้อยู่ระหว่างรอดำเนินการ กรุณาติดต่อผู้ดูแลระบบครับ!',
                     );
                     session()->set($sms);
-                    return redirect()->to(base_url('planning/training'));
+                    return redirect('training');
+
                 }
             }
         } else {
@@ -500,25 +523,13 @@ class Planning extends BaseController
 
     public function demo()
     {
-        $start = '2020-10-04';
-        $end = '2020-01-12';
+        $id = '10005';
 
-        echo $this->thaidate->rangeDate($start, $end);
-        // $start = '2020-10-04';
-        // $end = '2021-01-12';
-        // //echo $this->thaidate->cutdate($start);
+        $data['admin'] = $this->userModel->adminPlanning($id);
 
-        // if ($this->thaidate->fullmonth($start) == $this->thaidate->fullmonth($end)) {
-        //     if ($this->thaidate->cutdate($start) == $this->thaidate->cutdate($end)) {
-        //         echo $this->thaidate->shortdate($start);
-        //     } else {
-        //         echo $this->thaidate->cutdate($start) . ' - ' . $this->thaidate->cutdate($end) . ' ' . $this->thaidate->shortMonthYear($start);
-        //     }
-        // } elseif ($this->thaidate->yearth($start) == $this->thaidate->yearth($end)) {
-        //     echo $this->thaidate->dateShortMonth($start) . ' - ' . $this->thaidate->shortdate($end);
-        // } else {
-        //     echo $this->thaidate->shortdate($start) . ' - ' . $this->thaidate->shortdate($end);
-        // }
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
     }
 }
 
