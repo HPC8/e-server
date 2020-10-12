@@ -467,6 +467,7 @@
     e.preventDefault();
     var productID = jQuery(this).val();
     selectActivity(productID);
+    selectProgram(productID);
   });
 
   function selectActivity(productID) {
@@ -499,18 +500,18 @@
   }
 
   // get activity 
-  jQuery(document).on('change', 'select#train-activity', function (e) {
-    e.preventDefault();
-    var activityID = jQuery(this).val();
-    selectProgram(activityID);
-  });
+  // jQuery(document).on('change', 'select#train-activity', function (e) {
+  //   e.preventDefault();
+  //   var activityID = jQuery(this).val();
+  //   selectProgram(activityID);
+  // });
 
-  function selectProgram(activityID) {
+  function selectProgram(productID) {
     $.ajax({
       url: baseurl + 'planning/getProgram',
       type: 'post',
       data: {
-        activityID: activityID
+        productID: productID
       },
       dataType: 'json',
       beforeSend: function () {

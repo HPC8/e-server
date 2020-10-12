@@ -75,6 +75,24 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label for="program-department">
+                                <strong><U>กลุ่มงาน/Cluster</U></strong><small class="text-brown"> *</small>
+                            </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-sitemap"></i></span>
+                                </div>
+                                <select class="form-control input-program-department" id="program-department" name="department">
+                                    <option value="">-- กรุณาเลือก --</option>
+                                    <?php foreach ($department as $row) : ?>
+                                        <option value="<?= $row->department_id ?>"><?= $row->department_name ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">

@@ -46,6 +46,14 @@
         </tr>
         <tr>
             <td class="text-90 text-600 text-secondary-d2 text-right" width="20%">
+                กลุ่มงาน/Cluster
+            </td>
+            <td class="text-90 text-secondary-d2 text-left" width="80%">
+            <?= view_cell('\App\Models\HrModel::departmentName', ['id' => $program['department']]); ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-90 text-600 text-secondary-d2 text-right" width="20%">
                 ผู้บันทึกข้อมูล
             </td>
             <td class="text-90 text-secondary-d2 text-left" width="80%">

@@ -295,6 +295,7 @@ class HrModel extends Model
         $query = $builder->get();
         return $query->getResult();
     }
+
     public function getSection()
     {
         $builder = $this->db->table($this->tblSection);
@@ -508,5 +509,18 @@ class HrModel extends Model
         $builder->where('hospcode', $hospcode);
         $builder->update($data);
         return $this->affectedRows();
+    }
+
+    public function departmentName($id)
+    {
+        if ($id != '') {
+            $builder = $this->db->table($this->tblDepartment);
+            $builder->where('department_id', $id);
+            $query = $builder->get();
+            $data = $query->getRowArray();
+            return $data['department_name'];
+        } else {
+            return "";
+        }
     }
 }

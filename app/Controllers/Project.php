@@ -7,6 +7,7 @@ use App\Libraries\MyLibrary;
 use App\Models\UserModel;
 use App\Models\ProjectModel;
 use App\Libraries\Thaidate;
+use App\Models\HrModel;
 
 
 class Project extends Controller
@@ -20,6 +21,7 @@ class Project extends Controller
         $this->userModel = new UserModel();
         $this->projectModel = new ProjectModel();
         $this->thaidate = new Thaidate();
+        $this->hrModel = new HrModel();
     }
 
     public function plan($year = '')
@@ -783,6 +785,7 @@ class Project extends Controller
             }
             $data['productList'] = $this->projectModel->productList($year);
             $data['program'] = $this->projectModel->programList($year);
+            $data['department'] = $this->hrModel->getDepartment();
 
             return view('project/program/index', $data);
         } else {
@@ -806,6 +809,8 @@ class Project extends Controller
                     $programYear = $this->request->getVar('programYear');
                     $programName = $this->request->getVar('programName');
                     $programMoney = $this->request->getVar('programMoney');
+                    $department = $this->request->getVar('department');
+
 
                     if (empty(trim($productId))) {
                         $json['error']['program-productId'] = 'กรุณาเลือกชื่อผลผลิต';
@@ -822,6 +827,9 @@ class Project extends Controller
                     if ($programMoney < 0) {
                         $json['error']['program-money'] = 'จำนวนเงินงบประมาณไม่ถูกต้อง';
                     }
+                    if (empty(trim($department))) {
+                        $json['error']['program-department'] = 'กรุณาระบุกลุ่มงาน/Cluster';
+                    }
 
                     if (empty($json['error'])) {
                         $data = [
@@ -829,6 +837,7 @@ class Project extends Controller
                             'program_year' => $programYear,
                             'program_name' => $programName,
                             'program_money' => $programMoney,
+                            'department' => $department,
                             'created' => date("Y-m-d H:i:s"),
                             'created_code' => $data['user']['hospcode'],
                         ];
@@ -892,6 +901,7 @@ class Project extends Controller
 
             $data['productList'] = $this->projectModel->productList($year);
             $data['program'] = $this->projectModel->getProgram($id);
+            $data['department'] = $this->hrModel->getDepartment();
 
             return view('project/program/renderEdit', $data);
         } else {
@@ -916,6 +926,7 @@ class Project extends Controller
                     $programYear = $this->request->getVar('programYear');
                     $programName = $this->request->getVar('programName');
                     $programMoney = $this->request->getVar('programMoney');
+                    $department = $this->request->getVar('department');
 
 
                     if (empty(trim($productId))) {
@@ -933,6 +944,9 @@ class Project extends Controller
                     if ($programMoney < 0) {
                         $json['error']['program-money'] = 'จำนวนเงินงบประมาณไม่ถูกต้อง';
                     }
+                    if (empty(trim($department))) {
+                        $json['error']['program-department'] = 'กรุณาระบุกลุ่มงาน/Cluster';
+                    }
 
                     if (empty($json['error'])) {
                         $data = [
@@ -940,6 +954,7 @@ class Project extends Controller
                             'program_year' => $programYear,
                             'program_name' => $programName,
                             'program_money' => $programMoney,
+                            'department' => $department,
                             'modified' => date("Y-m-d H:i:s"),
                             'modified_code' => $data['user']['hospcode'],
                         ];

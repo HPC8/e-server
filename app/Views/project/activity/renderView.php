@@ -13,7 +13,7 @@
                 ชื่อผลผลิต
             </td>
             <td class="text-90 text-secondary-d2 text-left" width="80%">
-                <?= view_cell('\App\Models\ProjectModel::activityName', ['id' => $activity['product_id']]); ?>
+                <?= view_cell('\App\Models\ProjectModel::productName', ['id' => $activity['product_id']]); ?>
             </td>
         </tr>
         <tr>

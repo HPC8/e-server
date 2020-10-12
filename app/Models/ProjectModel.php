@@ -228,7 +228,7 @@ class ProjectModel extends Model
     public function selectProgram($id)
     {
         $builder = $this->db->table($this->tblProgram);
-        $builder->where('activity_id', $id);
+        $builder->where('product_id', $id);
         $builder->orderBy('program_name', 'ASC');
         $query = $builder->get();
         return $query->getResult();

@@ -203,12 +203,6 @@ class Planning extends BaseController
             $data['trainingStatus'] = $this->planningModel->trainingStatus();
 
 
-
-            // echo '<pre>';
-            // print_r($data);
-            // echo '</pre>';
-            // exit;
-
             if (!empty($data['trainingInfo'])) {
                 if ($data['trainingInfo']['trainStatus'] == "1") {
                     if ($data['trainingInfo']['hospcode'] == $data['user']['hospcode']) {
@@ -527,9 +521,15 @@ class Planning extends BaseController
     public function getProgram()
     {
         $json = [];
-        $json = $this->projectModel->selectProgram($this->request->getVar('activityID'));
+        $json = $this->projectModel->selectProgram($this->request->getVar('productID'));
         echo json_encode($json);
     }
+    // public function getProgram()
+    // {
+    //     $json = [];
+    //     $json = $this->projectModel->selectProgram($this->request->getVar('activityID'));
+    //     echo json_encode($json);
+    // }
 
     public function meeting()
     {
