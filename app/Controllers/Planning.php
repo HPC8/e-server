@@ -7,6 +7,7 @@ use App\Models\HrModel;
 use App\Models\PlanningModel;
 use App\Models\PlanningModel\TrainingModel;
 use App\Models\UserModel;
+use App\Models\ProjectModel;
 use Config\Services;
 
 class Planning extends BaseController
@@ -17,6 +18,7 @@ class Planning extends BaseController
         $this->hrModel = new HrModel();
         $this->planningModel = new PlanningModel();
         $this->thaidate = new Thaidate();
+        $this->projectModel = new ProjectModel();
     }
     public function training()
     {
@@ -200,6 +202,13 @@ class Planning extends BaseController
             $data['trainingExpenses'] = $this->planningModel->trainingExpenses($id);
             $data['trainingStatus'] = $this->planningModel->trainingStatus();
 
+
+
+            // echo '<pre>';
+            // print_r($data);
+            // echo '</pre>';
+            // exit;
+
             if (!empty($data['trainingInfo'])) {
                 if ($data['trainingInfo']['trainStatus'] == "1") {
                     if ($data['trainingInfo']['hospcode'] == $data['user']['hospcode']) {
@@ -215,7 +224,9 @@ class Planning extends BaseController
                 } elseif ($data['trainingInfo']['trainStatus'] == "2") {
                     if (!empty($data['admin'])) {
                         if ($data['admin']['level'] == "2") {
-                            echo 'ตรวจแผน';
+                            $year = $this->thaidate->fiscalYear($data['trainingInfo']['startDate']);
+                            $data['planList'] = $this->projectModel->planList($year);
+                            return view('planning/training/plan', $data);
                         } else {
                             $sms = array(
                                 'msg' => 1,
@@ -224,7 +235,6 @@ class Planning extends BaseController
                             session()->set($sms);
                             return redirect('training');
                         }
-
                     } else {
                         $sms = array(
                             'msg' => 1,
@@ -240,7 +250,6 @@ class Planning extends BaseController
                     );
                     session()->set($sms);
                     return redirect('training');
-
                 }
             }
         } else {
@@ -500,6 +509,26 @@ class Planning extends BaseController
             ];
             echo json_encode($output);
         }
+    }
+
+    public function getProduct()
+    {
+        $json = [];
+        $json = $this->projectModel->selectProduct($this->request->getVar('planID'));
+        echo json_encode($json);
+    }
+
+    public function getActivity()
+    {
+        $json = [];
+        $json = $this->projectModel->selectActivity($this->request->getVar('productID'));
+        echo json_encode($json);
+    }
+    public function getProgram()
+    {
+        $json = [];
+        $json = $this->projectModel->selectProgram($this->request->getVar('activityID'));
+        echo json_encode($json);
     }
 
     public function meeting()

@@ -37,9 +37,9 @@
     <!-- "Login" page styles, specific to this page for demo only -->
     <link rel="stylesheet" type="text/css" href="./application/views/default/pages/partials/page-login/@page-style.css">
     <style>
-      body {
-        font-family: 'Sarabun', sans-serif;
-      }
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
     </style>
 </head>
 
@@ -162,20 +162,18 @@
 
                                                     <hr class="brc-default-l2 w-100 mb-2" />
                                                     <div class="mt-n4 bgc-white-tp2 px-3 py-1 text-secondary-d3 text-90">
-                                                        Or Get Started Using</div>
-
+                                                        Login with Social Media</div>
                                                     <div class="my-2">
-                                                        <button type="button" class="btn btn-bgc-white btn-lighter-primary btn-h-primary btn-a-primary border-2 radius-round btn-lg mx-1">
-                                                            <i class="fab fa-facebook-f text-110"></i>
-                                                        </button>
+                                                        <a href='https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=<?php echo $line['client_id']; ?>&redirect_uri=<?php echo $line['redirect_uri']; ?>&state=ci&scope=profile%20openid&nonce=_ls978_&max_age=0' class="btn btn-bgc-white btn-lighter-success btn-h-success btn-a-success btn-lg px-25 mx-1">
+                                                            <i class="fab fa-line text-190"></i>
+                                                        </a>
+                                                        <a href='#' class="btn btn-bgc-white btn-lighter-primary btn-h-primary btn-a-primary btn-lg px-25 mx-1">
+                                                            <i class="fab fa-facebook text-190"></i>
+                                                        </a>
+                                                        <a href='#' class="btn btn-bgc-white btn-lighter-danger btn-h-danger btn-a-danger btn-lg px-25 mx-1">
+                                                            <i class="fab fa-google-plus text-190"></i>
+                                                        </a>
 
-                                                        <button type="button" class="btn btn-bgc-white btn-lighter-info btn-h-info btn-a-info border-2 radius-round btn-lg px-25 mx-1">
-                                                            <i class="fab fa-twitter text-110"></i>
-                                                        </button>
-
-                                                        <button type="button" class="btn btn-bgc-white btn-lighter-red btn-h-red btn-a-red border-2 radius-round btn-lg px-25 mx-1">
-                                                            <i class="fab fa-google text-110"></i>
-                                                        </button>
                                                     </div>
 
                                                 </div>
@@ -243,7 +241,7 @@
                     <div class="d-lg-none my-3 text-white-tp1 text-center">
                         <small>
                             ศูนย์อนามัยที่ 8 อุดรธานี | กรมอนามัย | กระทรวงสาธารณสุข
-                            <p>© Copyright <?= date("Y")+543;?>, ICT ศูนย์อนามัยที่ 8 อุดรธานี</p></small>
+                            <p>© Copyright <?= date("Y") + 543; ?>, ICT ศูนย์อนามัยที่ 8 อุดรธานี</p></small>
                     </div>
                 </div>
             </div>

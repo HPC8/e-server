@@ -8,7 +8,7 @@
             </button><!-- mobile sidebar toggler button -->
 
             <a class="navbar-brand text-white" href="#">
-                <i class="fa fa-leaf"></i>
+            <i class="fas fa-layer-group"></i>
                 <span>E-Service</span>
                 <span>App</span>
             </a><!-- .navbar-brand -->

@@ -185,7 +185,7 @@
 
                 <div class="form-group row">
                     <div class="col-sm-2 col-form-label text-sm-right pr-0">
-                        <label for="train-startDate" class="mb-0">
+                        <label for="" class="mb-0">
                             <a class="btn btn-success btn-sm border-2 brc-black-tp10 radius-round px-2" href="#" data-toggle="modal" data-target="#add-user">
                                 <i class="fas fa-plus"></i>
                                 เพิ่มข้อมูล

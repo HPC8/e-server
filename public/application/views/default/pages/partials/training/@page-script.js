@@ -57,7 +57,7 @@
               </div>\
               <button data-dismiss='toast' class='align-self-start btn btn-xs btn-outline-grey btn-h-light-grey py-2px mr-1 mt-1 border-0 text-150'>&times;</button></div>\
              </div>",
-          
+
       width: 420,
       delay: 5000,
 
@@ -67,7 +67,7 @@
 
       bodyClass: 'border-0 p-0 text-dark-tp2',
       headerClass: 'd-none',
-  })
+    })
   }
 
   function trashTraining() {
@@ -85,7 +85,7 @@
               </div>\
               <button data-dismiss='toast' class='align-self-start btn btn-xs btn-outline-grey btn-h-light-grey py-2px mr-1 mt-1 border-0 text-150'>&times;</button></div>\
              </div>",
-          
+
       width: 420,
       delay: 5000,
 
@@ -95,7 +95,7 @@
 
       bodyClass: 'border-0 p-0 text-dark-tp2',
       headerClass: 'd-none',
-  })
+    })
   }
 
   //datetimepicker วันที่ขออนุมัติเดินทาง
@@ -413,8 +413,8 @@
           width: "10%"
         }
       ],
-  
-  
+
+
       // columnDefs: [{
       //   // "targets": [],
       //   // "orderable": false, 
@@ -424,4 +424,112 @@
       // }, ],
     });
   });
-  
+
+  // get plan 
+  jQuery(document).on('change', 'select#train-plan', function (e) {
+    e.preventDefault();
+    var planID = jQuery(this).val();
+    selectProduct(planID);
+  });
+
+
+  function selectProduct(planID) {
+    $.ajax({
+      url: baseurl + 'planning/getProduct',
+      type: 'post',
+      data: {
+        planID: planID
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        jQuery('select#train-product').find("option:eq(0)").html("Loading...");
+      },
+      complete: function () {
+        // code
+      },
+      success: function (json) {
+        var options = '';
+        options += '<option value="">-- กรุณาเลือก --</option>';
+        for (var i = 0; i < json.length; i++) {
+          options += '<option value="' + json[i].product_id + '">' + json[i].product_name + '</option>';
+        }
+        jQuery("select#train-product").html(options);
+
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }
+
+  // get product 
+  jQuery(document).on('change', 'select#train-product', function (e) {
+    e.preventDefault();
+    var productID = jQuery(this).val();
+    selectActivity(productID);
+  });
+
+  function selectActivity(productID) {
+    $.ajax({
+      url: baseurl + 'planning/getActivity',
+      type: 'post',
+      data: {
+        productID: productID
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        jQuery('select#train-activity').find("option:eq(0)").html("Loading...");
+      },
+      complete: function () {
+        // code
+      },
+      success: function (json) {
+        var options = '';
+        options += '<option value="">-- กรุณาเลือก --</option>';
+        for (var i = 0; i < json.length; i++) {
+          options += '<option value="' + json[i].activity_id + '">' + json[i].activity_name + '</option>';
+        }
+        jQuery("select#train-activity").html(options);
+
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }
+
+  // get activity 
+  jQuery(document).on('change', 'select#train-activity', function (e) {
+    e.preventDefault();
+    var activityID = jQuery(this).val();
+    selectProgram(activityID);
+  });
+
+  function selectProgram(activityID) {
+    $.ajax({
+      url: baseurl + 'planning/getProgram',
+      type: 'post',
+      data: {
+        activityID: activityID
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        jQuery('select#train-program').find("option:eq(0)").html("Loading...");
+      },
+      complete: function () {
+        // code
+      },
+      success: function (json) {
+        var options = '';
+        options += '<option value="">-- กรุณาเลือก --</option>';
+        for (var i = 0; i < json.length; i++) {
+          options += '<option value="' + json[i].program_id + '">' + json[i].program_name + '</option>';
+        }
+        jQuery("select#train-program").html(options);
+
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }

@@ -7,6 +7,7 @@ use App\Libraries\PassEncrypt;
 use App\Models\HrModel;
 use App\Models\LocationModel;
 use App\Libraries\MyLibrary;
+use App\Libraries\LineAPI;
 
 class Users extends BaseController
 {
@@ -18,11 +19,28 @@ class Users extends BaseController
 		$this->hrModel = new HrModel();
 		$this->location = new LocationModel();
 		$this->myLibrary = new MyLibrary();
+		$this->lineAPI = new LineAPI();
+	}
+
+	public function index()
+	{
+		$data = [];
+		if (session('isLoggedIn')) {
+			$data['user'] = $this->userModel->getUser(session('userId'));
+			return redirect('index');
+		} else {
+			return redirect('auth');
+		}
 	}
 
 	public function auth()
 	{
-		return view('users/auth');
+		$data['line'] = [
+			"client_id" => $this->lineAPI->CLIENT_ID(),
+			"client_secret" => $this->lineAPI->CLIENT_SECRET(),
+			"redirect_uri" => $this->lineAPI->REDIRECT_URL()
+		];
+		return view('users/auth', $data);
 	}
 	public function authSubmit()
 	{
@@ -71,8 +89,113 @@ class Users extends BaseController
 
 	public function logout()
 	{
+		if (session('access_token') != NULL) {
+			$this->lineLogout();
+		}
+
 		session()->destroy();
 		return redirect()->to('auth');
+	}
+
+	public function lineCallback()
+	{
+		if (isset($_GET["code"])) {
+			try {
+				// Step 1. GET Access Token 
+				$post_data = [
+					"grant_type" => 'authorization_code',
+					"client_id" => $this->lineAPI->CLIENT_ID(),
+					"client_secret" => $this->lineAPI->CLIENT_SECRET(),
+					"code" => $_GET["code"],
+					"redirect_uri" => $this->lineAPI->REDIRECT_URL()
+				];
+
+				$headers[] = "Content-Type: application/x-www-form-urlencoded";
+
+				$url = "https://api.line.me/oauth2/v2.1/token";
+				$ch = curl_init();
+
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+				curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				$response = json_decode(curl_exec($ch), true);
+				curl_close($ch);
+
+				// Step 2. GET User Profile
+				$accessToken = $response['access_token'];
+				if (!empty($accessToken)) {
+					session()->set('access_token', $accessToken);
+					$headerData = [
+						"content-type: application/x-www-form-urlencoded",
+						"charset=UTF-8",
+						'Authorization: Bearer ' . $accessToken,
+					];
+
+					$ch2 = curl_init();
+					curl_setopt($ch2, CURLOPT_HTTPHEADER, $headerData);
+					curl_setopt($ch2, CURLOPT_URL, "https://api.line.me/v2/profile");
+					curl_setopt($ch2, CURLINFO_HEADER_OUT, true);
+					curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
+					$result = curl_exec($ch2);
+					$httpcode = curl_getinfo($ch2, CURLINFO_HTTP_CODE);
+					curl_close($ch2);
+
+					$result = json_decode($result, true);
+					if ($httpcode == 200) {
+
+						$data['line'] = [
+							"userId" => $result['userId'],
+							"name" => $result['displayName'],
+							"picture" => $result['pictureUrl'],
+						];
+
+						$query = $this->userModel->checkLineID($result['userId']);
+						if ($query) {
+							session()->set('isLoggedIn', TRUE);
+							session()->set('userId', $query['emp_id']);
+
+							return redirect()->to('index');
+						} else {
+							return redirect()->to('auth');
+						}
+					} else {
+						return redirect()->to('auth');
+					}
+				}
+			} catch (\Exception $e) {
+				die($e->getMessage());
+			}
+		}
+	}
+
+	public function lineLogout()
+	{
+		try {
+			$post_data = [
+				"access_token" => session('access_token'),
+				"client_id" => $this->lineAPI->CLIENT_ID(),
+				"client_secret" => $this->lineAPI->CLIENT_SECRET(),
+			];
+
+			$headers[] = "Content-Type: application/x-www-form-urlencoded";
+
+			$url = "https://api.line.me/oauth2/v2.1/token";
+			$ch = curl_init();
+
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+			curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$response = json_decode(curl_exec($ch), true);
+			curl_close($ch);
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
 	}
 
 	public function profile()
@@ -244,7 +367,7 @@ class Users extends BaseController
 			if (empty($json['error'])) {
 				$data = [
 					'email' => $_email,
-					'mobile' =>$_mobile,
+					'mobile' => $_mobile,
 					'address' => $_address,
 					'province_id' => $_province,
 					'amphur_id' => $_amphur,
@@ -309,3 +432,8 @@ class Users extends BaseController
 	}
 }
 // return redirect()->to(base_url(''));
+
+// echo '<pre>';
+// print_r($data);
+// echo '</pre>';
+// exit;

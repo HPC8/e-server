@@ -206,4 +206,31 @@ class ProjectModel extends Model
         $builder->update($data);
         return $this->affectedRows();
     }
+
+    public function selectProduct($id)
+    {
+        $builder = $this->db->table($this->tblProduct);
+        $builder->where('plan_id', $id);
+        $builder->orderBy('product_name', 'ASC');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function selectActivity($id)
+    {
+        $builder = $this->db->table($this->tblActivity);
+        $builder->where('product_id', $id);
+        $builder->orderBy('activity_name', 'ASC');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function selectProgram($id)
+    {
+        $builder = $this->db->table($this->tblProgram);
+        $builder->where('activity_id', $id);
+        $builder->orderBy('program_name', 'ASC');
+        $query = $builder->get();
+        return $query->getResult();
+    }
 }

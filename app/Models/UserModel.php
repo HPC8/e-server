@@ -11,7 +11,7 @@ class UserModel extends Model
     protected $_adminHr = 'tbl_user_hr';
     protected $_adminProject = 'tbl_user_project';
     protected $_adminPlanning = 'tbl_user_planning';
-    
+
 
     public function checkCode($id)
     {
@@ -31,6 +31,14 @@ class UserModel extends Model
     {
         $builder = $this->db->table($this->_employee);
         $builder->where('hospname', $id);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+
+    public function checkLineID($id)
+    {
+        $builder = $this->db->table($this->_employee);
+        $builder->where('line_id', $id);
         $query = $builder->get();
         return $query->getRowArray();
     }
