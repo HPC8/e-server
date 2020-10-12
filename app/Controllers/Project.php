@@ -781,7 +781,7 @@ class Project extends Controller
             if ($year == '') {
                 $year = $this->thaidate->fiscalYear(date("Y-m-d"));
             }
-            $data['activityList'] = $this->projectModel->activityList($year);
+            $data['productList'] = $this->projectModel->productList($year);
             $data['program'] = $this->projectModel->programList($year);
 
             return view('project/program/index', $data);
@@ -802,13 +802,13 @@ class Project extends Controller
 
             if (!empty($data['admin'])) {
                 if ($data['admin'][0]->level == 1 || $data['admin'][0]->level == 2) {
-                    $activityId = $this->request->getVar('activityId');
+                    $productId = $this->request->getVar('productId');
                     $programYear = $this->request->getVar('programYear');
                     $programName = $this->request->getVar('programName');
                     $programMoney = $this->request->getVar('programMoney');
 
-                    if (empty(trim($activityId))) {
-                        $json['error']['program-activityId'] = 'กรุณาเลือกชื่อกิจกรรม';
+                    if (empty(trim($productId))) {
+                        $json['error']['program-productId'] = 'กรุณาเลือกชื่อผลผลิต';
                     }
                     if (empty(trim($programYear))) {
                         $json['error']['program-year'] = 'กรุณาเลือกปีงบประมาณ';
@@ -825,7 +825,7 @@ class Project extends Controller
 
                     if (empty($json['error'])) {
                         $data = [
-                            'activity_id' => $activityId,
+                            'product_id' => $productId,
                             'program_year' => $programYear,
                             'program_name' => $programName,
                             'program_money' => $programMoney,
@@ -890,7 +890,7 @@ class Project extends Controller
             $id = $this->request->getVar('id');
             $year = $this->request->getVar('year');
 
-            $data['activityList'] = $this->projectModel->activityList($year);
+            $data['productList'] = $this->projectModel->productList($year);
             $data['program'] = $this->projectModel->getProgram($id);
 
             return view('project/program/renderEdit', $data);
@@ -912,13 +912,14 @@ class Project extends Controller
             if (!empty($data['admin'])) {
                 if ($data['admin'][0]->level == 1 || $data['admin'][0]->level == 2) {
                     $id = $this->request->getVar('programId');
-                    $activityId = $this->request->getVar('activityId');
+                    $productId = $this->request->getVar('productId');
                     $programYear = $this->request->getVar('programYear');
                     $programName = $this->request->getVar('programName');
                     $programMoney = $this->request->getVar('programMoney');
 
-                    if (empty(trim($activityId))) {
-                        $json['error']['program-activityId'] = 'กรุณาเลือกชื่อกิจกรรม';
+
+                    if (empty(trim($productId))) {
+                        $json['error']['program-productId'] = 'กรุณาเลือกชื่อผลผลิต';
                     }
                     if (empty(trim($programYear))) {
                         $json['error']['program-year'] = 'กรุณาเลือกปีงบประมาณ';
@@ -935,7 +936,7 @@ class Project extends Controller
 
                     if (empty($json['error'])) {
                         $data = [
-                            'activity_id' => $activityId,
+                            'product_id' => $productId,
                             'program_year' => $programYear,
                             'program_name' => $programName,
                             'program_money' => $programMoney,

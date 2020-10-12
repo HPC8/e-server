@@ -159,7 +159,23 @@ class Users extends BaseController
 
 							return redirect()->to('index');
 						} else {
-							return redirect()->to('auth');
+							$query = $this->lineConnect($result['userId']);
+
+							if (!empty($query)) {
+								$sms = array(
+									'msg' => 0,
+									'info' => 'คุณได้ทำการเชื่อมต่อ LINE Account เรียบร้อย',
+								);
+								session()->set($sms);
+							} else {
+								$sms = array(
+									'msg' => 1,
+									'info' => 'ไม่สามารถเชื่อมต่อ LINE Account กับบัญชีผู้ใช้งานได้ กรุณาลงทะเบียนก่อนใช้งานฟังชั่นนี้!',
+								);
+								session()->set($sms);
+							}
+
+							return redirect()->to('profile');
 						}
 					} else {
 						return redirect()->to('auth');
@@ -198,6 +214,19 @@ class Users extends BaseController
 		}
 	}
 
+	public function lineConnect($userId)
+	{
+		$data = [];
+		$data['user'] = $this->userModel->getUser(session('userId'));
+		if (!empty($data['user'])) {
+			$line = [
+				"line_id" => $userId,
+				"line_date" => date("Y-m-d H:i:s"),
+			];
+			return $this->userModel->lineRegister($line, $data['user']['hospcode']);
+		}
+	}
+
 	public function profile()
 	{
 		$data = [];
@@ -209,6 +238,13 @@ class Users extends BaseController
 				"Profile" => ""
 			];
 			$data['breadcrumb'] = $breadcrumb;
+
+			$data['line'] = [
+				"client_id" => $this->lineAPI->CLIENT_ID(),
+				"client_secret" => $this->lineAPI->CLIENT_SECRET(),
+				"redirect_uri" => $this->lineAPI->REDIRECT_URL()
+			];
+
 			return view('users/profile', $data);
 		} else {
 			return redirect('auth');
@@ -331,9 +367,27 @@ class Users extends BaseController
 		}
 	}
 
+	public function uploadAvatar($file)
+	{
+		$destPath = ROOTPATH . 'public/uploads/avatar';
+		$allowed = ['jpg', 'png', 'gif'];
+		$ext = $file->getExtension();
+		if ($file->isValid() && !$file->hasMoved() && in_array($ext, $allowed)) {
+			if ($file->getSizeByUnit('mb') > 3) {
+				return 'ขนาดไฟล์ใหญ่เกินกว่าที่อนุญาต (3M)';
+			} else {
+				$newName = date("Ymd_") . $file->getRandomName();
+				$file->move($destPath, $newName);
+				$this->userModel->setAvatar($file->getName());
+			}
+		} else {
+			return 'ชนิดของไฟล์ไม่ถูกต้อง (jpg, png, gif)';
+		}
+	}
+
 	public function updateUser()
 	{
-		helper(['form']);
+		helper(['form', 'url']);
 		$data = [];
 		$json = [];
 		if (session('isLoggedIn')) {
@@ -345,6 +399,8 @@ class Users extends BaseController
 			$_amphur = $this->request->getVar('amphur');
 			$_district = $this->request->getVar('district');
 			$_mobile = $this->request->getVar('mobile');
+			$file = $this->request->getFile('avatar');
+			$avatar = '';
 
 			if ($this->myLibrary->validateEmail($_email) == FALSE) {
 				$json['error']['email'] = 'รูปแบบอีเมล์ไม่ถูกต้อง';
@@ -364,6 +420,12 @@ class Users extends BaseController
 			if (empty(trim($_mobile))) {
 				$json['error']['mobile'] = 'กรุณาระบุเบอร์โทรศัพท์';
 			}
+			if ($file->isValid()) {
+				$avatar = $this->uploadAvatar($file);
+			}
+			if ($avatar != null) {
+				$json['error']['err'] = $avatar;
+			}
 			if (empty($json['error'])) {
 				$data = [
 					'email' => $_email,
@@ -372,6 +434,7 @@ class Users extends BaseController
 					'province_id' => $_province,
 					'amphur_id' => $_amphur,
 					'district_id' => $_district,
+					'avatar' => $this->userModel->avatar(),
 					'edit_by' => $data['user']['hospcode'],
 					'edit_ip' => $_SERVER['REMOTE_ADDR'],
 					'edit_date' => date("Y-m-d H:i:s"),

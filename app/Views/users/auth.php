@@ -86,7 +86,7 @@
                                                     <div class="text-center text-90 text-dark-tp2">
                                                         <small>
                                                             ศูนย์อนามัยที่ 8 อุดรธานี | กรมอนามัย | กระทรวงสาธารณสุข
-                                                            <p>© Copyright 2019, ICT ศูนย์อนามัยที่ 8 อุดรธานี</p></small>
+                                                            <p>© Copyright <?= date("Y")+543;?>, ICT ศูนย์อนามัยที่ 8 อุดรธานี</p></small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -241,7 +241,7 @@
                     <div class="d-lg-none my-3 text-white-tp1 text-center">
                         <small>
                             ศูนย์อนามัยที่ 8 อุดรธานี | กรมอนามัย | กระทรวงสาธารณสุข
-                            <p>© Copyright <?= date("Y") + 543; ?>, ICT ศูนย์อนามัยที่ 8 อุดรธานี</p></small>
+                            <p>© Copyright <?= date("Y")+543;?>, ICT ศูนย์อนามัยที่ 8 อุดรธานี</p></small>
                     </div>
                 </div>
             </div>
@@ -249,6 +249,21 @@
         </div>
 
     </div>
+
+    <?php
+    if (session('msg') == '1') { { ?>
+            <a id="alerts-auto" data-toggle="modal" data-target="#alerts-modal"></a>
+        <?php }
+    } elseif (session('msg') == '0') { ?>
+        <a id="success-auto" data-toggle="modal" data-target="#success-modal"></a>
+    <?php }
+    ?>
+
+    <?php
+    echo view('users/modal/alert');
+    ?>
+
+
     <script>
         var baseurl = "<?= base_url() ?>/";
     </script>
@@ -267,6 +282,11 @@
 
     <!-- "Login" page script to enable its demo functionality -->
     <script src="./application/views/default/pages/partials/page-auth/@page-script.js"></script>
+
+    <script type="text/javascript">
+        $($('#alerts-auto').click());
+        $($('#success-auto').click());
+    </script>
 </body>
 
 </html>

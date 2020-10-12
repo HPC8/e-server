@@ -7,10 +7,12 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
 
+    protected $Employee = 'tbl_employee';
     protected $_employee = 'view_tbl_employee';
     protected $_adminHr = 'tbl_user_hr';
     protected $_adminProject = 'tbl_user_project';
     protected $_adminPlanning = 'tbl_user_planning';
+    private $_avatar;
 
 
     public function checkCode($id)
@@ -93,5 +95,21 @@ class UserModel extends Model
         $builder->where('hospcode', $id);
         $query = $builder->get();
         return $query->getRowArray();
+    }
+
+    public function lineRegister($line, $hospcode)
+    {
+        $builder = $this->db->table($this->Employee);
+        $builder->where('hospcode', $hospcode);
+        $builder->update($line);
+        return $this->affectedRows();
+    }
+
+    public function setAvatar($avatar) {
+        $this->_avatar=$avatar;
+    }
+
+    public function avatar() {
+        return $this->_avatar;
     }
 }

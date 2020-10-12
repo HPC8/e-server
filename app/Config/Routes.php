@@ -35,6 +35,7 @@ $routes->get('index', 'Dashboard::index');
 $routes->get('auth', 'Users::auth');
 $routes->get('hr', 'Hr::index');
 $routes->get('training', 'Planning::training');
+$routes->get('profile', 'Users::profile');
 
 // $routes->get('hr/profile/(:any)', 'Hr::profile/$1');
 // $routes->get('profile', 'Hr::profile');

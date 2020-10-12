@@ -16,11 +16,11 @@
 
                     <div class="pos-rel radius-2 overflow-hidden mb-3 mb-sm-0">
                         <?php
-                        if ($userInfo['photo'] == "") { ?>
-                            <img alt="Profile image" src="assets/upload/users/profile/default.png" style="max-width:180px;width:100%" />
+                        if ($userInfo['avatar'] == "") { ?>
+                            <img alt="Profile image" src="uploads/avatar/default.png" style="max-width:180px;width:100%" />
                         <?php
                         } else { ?>
-                            <img alt="Profile image" src="assets/upload/users/profile/<?= $userInfo['photo']; ?>" style="max-width:180px;width:100%" />
+                            <img alt="Profile image" src="uploads/avatar/<?= $userInfo['avatar']; ?>" style="max-width:180px;width:100%" />
                         <?php
                         }
                         ?>

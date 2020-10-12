@@ -507,7 +507,19 @@
 
                     </div>
                 </fieldset>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label for="input-department">
+                            <strong><U>รูปภาพ</U></strong>
+                        </label>
+                        <input type="file" name="avatar" class="form-control input-avatar" id="input-avatar">
+                        <img id="input-avatar-tag" style="max-width:120px;width:120%" />
+                        <input type="hidden" class="form-control input-err" id="input-err">
+                    </div>
 
+
+                </div>
+               
                 <input type="hidden" class="form-control input-hospcode" id="hospcode" name="hospcode" value="<?= $user['hospcode']; ?>">
 
                 <div class="mt-5 border-t-1 brc-secondary-l2 py-35 mx-n25">

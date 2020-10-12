@@ -50,12 +50,12 @@
         <button class="navbar-toggler ml-1 mr-2 px-1" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navbar menu">
             <span class="pos-rel">
                 <?php
-                if ($user['photo'] == "") { ?>
-                    <img class="border-2 brc-white-tp1 radius-round" width="36" src="assets/upload/users/profile/default.png" alt="User Photo">
-                    <img id="id-navbar-user-image" class="d-none d-lg-inline-block radius-5 border-2 brc-white-tp1 mr-2 w-6" src="assets/upload/users/profile/default.png" style="max-width:35px;width:100%">
+                if ($user['avatar'] == "") { ?>
+                    <img class="border-2 brc-white-tp1 radius-round" width="36" src="uploads/avatar/default.png" alt="User avatar">
+                    <img id="id-navbar-user-image" class="d-none d-lg-inline-block radius-5 border-2 brc-white-tp1 mr-2 w-6" src="uploads/avatar/default.png" style="max-width:35px;width:100%">
                 <?php
                 } else { ?>
-                    <img class="border-2 brc-white-tp1 radius-round" width="36" src="assets/upload/users/profile/<?= $user['photo']; ?>" alt="User Photo">
+                    <img class="border-2 brc-white-tp1 radius-round" width="36" src="uploads/avatar/<?= $user['avatar']; ?>" alt="User avatar">
                 <?php
                 }
                 ?>
@@ -281,11 +281,11 @@
                     <li class="nav-item dropdown order-first order-lg-last dropdown-hover">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <?php
-                            if ($user['photo'] == "") { ?>
-                                <img id="id-navbar-user-image" class="d-none d-lg-inline-block radius-5 border-2 brc-white-tp1 mr-2 w-6" src="assets/upload/users/profile/default.png" style="max-width:35px;width:100%">
+                            if ($user['avatar'] == "") { ?>
+                                <img id="id-navbar-user-image" class="d-none d-lg-inline-block radius-5 border-2 brc-white-tp1 mr-2 w-6" src="uploads/avatar/default.png" style="max-width:35px;width:100%">
                             <?php
                             } else { ?>
-                                <img id="id-navbar-user-image" class="d-none d-lg-inline-block radius-5 border-2 brc-white-tp1 mr-2 w-6" src="assets/upload/users/profile/<?= $user['photo']; ?>" style="max-width:35px;width:100%">
+                                <img id="id-navbar-user-image" class="d-none d-lg-inline-block radius-5 border-2 brc-white-tp1 mr-2 w-6" src="uploads/avatar/<?= $user['avatar']; ?>" style="max-width:35px;width:100%">
                             <?php
                             }
                             ?>

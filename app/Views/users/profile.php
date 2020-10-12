@@ -16,18 +16,18 @@
 
                     <div class="pos-rel radius-2 overflow-hidden">
                         <?php
-                        if ($user['photo'] == "") { ?>
-                            <img alt="Profile image" src="assets/upload/users/profile/default.png" style="max-width:180px;width:100%" />
+                        if ($user['avatar'] == "") { ?>
+                            <img alt="Profile image" src="uploads/avatar/default.png" style="max-width:180px;width:100%" />
                         <?php
                         } else { ?>
-                            <img alt="Profile image" src="assets/upload/users/profile/<?= $user['photo']; ?>" style="max-width:180px;width:100%" />
+                            <img alt="Profile image" src="uploads/avatar/<?= $user['avatar']; ?>" style="max-width:180px;width:100%" />
                         <?php
                         }
                         ?>
 
                     </div>
                     <div class="text-center mt-3">
-                        <img data-toggle="modal" data-target="#icon" src="assets/upload/users/signature/<?= $user['hospcode'] . ".gif"; ?>" style="max-height:50px;height:100%" />
+                        <img data-toggle="modal" data-target="#icon" src="uploads/signature/<?= $user['hospcode'] . ".gif"; ?>" style="max-height:50px;height:100%" />
                     </div>
                     <div class="text-center mt-1">
                         <h5 class="text-120 text-dark-m3">
@@ -35,11 +35,31 @@
                         </h5>
                     </div>
 
-                    <a href="users/edit"class="btn btn-block btn-primary"><i class="fas fa-user-edit"> </i>
+                    <a href="users/edit" class="btn btn-block btn-primary"><i class="fas fa-user-edit"> </i>
                         <span class="bigger-110">แก้ไขข้อมูล</span> </a>
 
                     <a href="#" data-getcode="<?= $user['hospcode']; ?>" data-toggle="modal" data-target="#passwd-user" class="btn btn-block btn-success passwd-user-details"><i class="fas fa-lock"> </i>
                         <span class="bigger-110">เปลี่ยนรหัสผ่าน</span> </a>
+
+                    <hr class="mb-1 pt-1" />
+                    <hr class="brc-default-l2 w-100 mb-2" />
+                    <div class="mt-n4 bgc-white-tp2 px-3 py-1 text-secondary-d3 text-90">
+                        Connect with Social Media</div>
+
+
+
+                    <div class="card-body pt-2">
+                        <a href='https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=<?= $line['client_id']; ?>&redirect_uri=<?= $line['redirect_uri']; ?>&state=ci&scope=profile%20openid&nonce=_ls978_&max_age=0' class="btn btn-bgc-white btn-lighter-success btn-h-success btn-a-success btn-lg px-25 mx-1">
+                            <i class="fab fa-line text-190"></i>
+                        </a>
+                        <a href='#' class="btn btn-bgc-white btn-lighter-primary btn-h-primary btn-a-primary btn-lg px-25 mx-1">
+                            <i class="fab fa-facebook text-190"></i>
+                        </a>
+                        <a href='#' class="btn btn-bgc-white btn-lighter-danger btn-h-danger btn-a-danger btn-lg px-25 mx-1">
+                            <i class="fab fa-google-plus text-190"></i>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>
