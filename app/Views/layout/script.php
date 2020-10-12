@@ -1,5 +1,5 @@
 <script>
-    var baseurl = "<?php echo base_url() ?>/";
+    var baseurl = "<?= base_url() ?>/";
 </script>
 <!-- include common vendor scripts used in demo pages -->
 <script src="./node_modules/jquery/dist/jquery.js"></script>

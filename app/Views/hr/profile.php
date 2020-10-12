@@ -30,7 +30,7 @@
                     </div>
                     <div class="text-center mt-1">
                         <h5 class="text-120 text-dark-m3">
-                            <?php echo $userInfo['titlename'] . $userInfo['firstname'] . ' ' . $userInfo['lastname']; ?>
+                            <?= $userInfo['titlename'] . $userInfo['firstname'] . ' ' . $userInfo['lastname']; ?>
                         </h5>
                     </div>
 
@@ -114,7 +114,7 @@
                                                 รหัสประจำตัว
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['hospcode']; ?>
+                                                <?= $userInfo['hospcode']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -122,7 +122,7 @@
                                                 ชื่อ-สกุล
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['titlename'] . $userInfo['firstname'] . ' ' . $userInfo['lastname']; ?>
+                                                <?= $userInfo['titlename'] . $userInfo['firstname'] . ' ' . $userInfo['lastname']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -130,7 +130,7 @@
                                                 ชื่อ-สกุล (English)
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['lastname_eng'] . ' ' . $userInfo['firstname_eng']; ?>
+                                                <?= $userInfo['lastname_eng'] . ' ' . $userInfo['firstname_eng']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -138,7 +138,7 @@
                                                 เพศ
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['sex_name']; ?>
+                                                <?= $userInfo['sex_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -146,7 +146,7 @@
                                                 สถานภาพ
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['marital_name']; ?>
+                                                <?= $userInfo['marital_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -170,7 +170,7 @@
                                                 กรุ๊ปเลือด
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['blood']; ?>
+                                                <?= $userInfo['blood']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -178,7 +178,7 @@
                                                 เลขบัตรประชาชน
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['cid']; ?>
+                                                <?= $userInfo['cid']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -186,7 +186,7 @@
                                                 ที่อยู่
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['address'] . " ต." . $userInfo['district_name'] . " อ." . $userInfo['amphur_name'] . " จ." . $userInfo['province_name'] . " " . $user['zipcode']; ?>
+                                                <?= $userInfo['address'] . " ต." . $userInfo['district_name'] . " อ." . $userInfo['amphur_name'] . " จ." . $userInfo['province_name'] . " " . $user['zipcode']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -194,7 +194,7 @@
                                                 อีเมล์
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['email']; ?>
+                                                <?= $userInfo['email']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -202,7 +202,7 @@
                                                 เบอร์โทรศัพท์
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['mobile']; ?>
+                                                <?= $userInfo['mobile']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -210,7 +210,7 @@
                                                 การศึกษา
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['education_name'] . " " . $userInfo['degree_name'] . " สาขา " . $userInfo['branch']; ?>
+                                                <?= $userInfo['education_name'] . " " . $userInfo['degree_name'] . " สาขา " . $userInfo['branch']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -218,7 +218,7 @@
                                                 ประเภทบุคลากร
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['category_name']; ?>
+                                                <?= $userInfo['category_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -226,7 +226,7 @@
                                                 ตำแหน่ง
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['position_name'] . " " . $userInfo['level_name']; ?>
+                                                <?= $userInfo['position_name'] . " " . $userInfo['level_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -234,7 +234,7 @@
                                                 งาน
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['section_name']; ?>
+                                                <?= $userInfo['section_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -242,7 +242,7 @@
                                                 กลุ่ม
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['department_name']; ?>
+                                                <?= $userInfo['department_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -266,7 +266,7 @@
                                                 สถานะการปฏิบัติงาน
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $userInfo['status'] == '1' ? 'กำลังปฏิบัติงาน' : 'จำหน่ายแล้ว' ?>
+                                                <?= $userInfo['status'] == '1' ? 'กำลังปฏิบัติงาน' : 'จำหน่ายแล้ว' ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -330,7 +330,7 @@
                     <!-- profile edit tab -->
                     <div class="tab-pane px-1 px-md-2 px-lg-4" id="profile-tab-note">
                         <div class="alert bgc-secondary-l3 text-dark-m1 border-none border-l-4 brc-blue radius-0 py-3 text-115">
-                            <?php echo $userInfo['note']; ?>
+                            <?= $userInfo['note']; ?>
                         </div>
                     </div>
 

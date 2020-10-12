@@ -22,7 +22,7 @@
 
                             <div class="input-group">
                                 <label for="hospcode" class="text-brown">
-                                    <?php echo "<h5><B>" . $userInfo['hospcode'] . "</B></h5>"; ?>
+                                    <?= "<h5><B>" . $userInfo['hospcode'] . "</B></h5>"; ?>
                                 </label>
                             </div>
                         </div>
@@ -35,15 +35,15 @@
 
                                 <div class="input-group input-sex">
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="bgc-blue" id="sex1" value="1" name="sex" <?php echo $userInfo['sex'] == '1' ? 'checked' : '' ?> />
+                                        <input type="radio" class="bgc-blue" id="sex1" value="1" name="sex" <?= $userInfo['sex'] == '1' ? 'checked' : '' ?> />
                                         <label class="form-check-label" for="sex1">ชาย</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="bgc-blue" id="sex2" value="2" name="sex" <?php echo $userInfo['sex'] == '2' ? 'checked' : '' ?> />
+                                        <input type="radio" class="bgc-blue" id="sex2" value="2" name="sex" <?= $userInfo['sex'] == '2' ? 'checked' : '' ?> />
                                         <label class="form-check-label" for="sex2">หญิง</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="bgc-blue" id="sex3" value="3" name="sex" <?php echo $userInfo['sex'] == '3' ? 'checked' : '' ?> />
+                                        <input type="radio" class="bgc-blue" id="sex3" value="3" name="sex" <?= $userInfo['sex'] == '3' ? 'checked' : '' ?> />
                                         <label class="form-check-label" for="sex3">อื่นๆ</label>
                                     </div>
 
@@ -59,23 +59,23 @@
 
                                 <div class="input-group input-marital">
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="marital1" class="bgc-blue" value="1" name="marital" <?php echo $userInfo['marital'] == '1' ? 'checked' : '' ?> />
+                                        <input type="radio" id="marital1" class="bgc-blue" value="1" name="marital" <?= $userInfo['marital'] == '1' ? 'checked' : '' ?> />
                                         <label class="form-check-label" for="marital1">โสด</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="marital2" class="bgc-blue" value="2" name="marital" <?php echo $userInfo['marital'] == '2' ? 'checked' : '' ?> />
+                                        <input type="radio" id="marital2" class="bgc-blue" value="2" name="marital" <?= $userInfo['marital'] == '2' ? 'checked' : '' ?> />
                                         <label class="form-check-label" for="marital2">คู่</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="marital3" class="bgc-blue" value="3" name="marital" <?php echo $userInfo['marital'] == '3' ? 'checked' : '' ?> />
+                                        <input type="radio" id="marital3" class="bgc-blue" value="3" name="marital" <?= $userInfo['marital'] == '3' ? 'checked' : '' ?> />
                                         <label class="form-check-label" for="marital3">หม้าย</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="marital4" class="bgc-blue" value="4" name="marital" <?php echo $userInfo['marital'] == '4' ? 'checked' : '' ?> />
+                                        <input type="radio" id="marital4" class="bgc-blue" value="4" name="marital" <?= $userInfo['marital'] == '4' ? 'checked' : '' ?> />
                                         <label class="form-check-label" for="marital4">หย่า</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" id="marital5" class="bgc-blue" value="5" name="marital" <?php echo $userInfo['marital'] == '5' ? 'checked' : '' ?> />
+                                        <input type="radio" id="marital5" class="bgc-blue" value="5" name="marital" <?= $userInfo['marital'] == '5' ? 'checked' : '' ?> />
                                         <label class="form-check-label" for="marital5">แยก</label>
                                     </div>
 
@@ -131,7 +131,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-firstname" id="input-firstname" name="firstname" value="<?php echo $userInfo['firstname']; ?>" />
+                                <input type="text" class="form-control input-firstname" id="input-firstname" name="firstname" value="<?= $userInfo['firstname']; ?>" />
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -143,7 +143,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-lastname" id="input-lastname" name="lastname" value="<?php echo $userInfo['lastname']; ?>" />
+                                <input type="text" class="form-control input-lastname" id="input-lastname" name="lastname" value="<?= $userInfo['lastname']; ?>" />
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -155,7 +155,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-cid" id="input-cid" name="cid" value="<?php echo $userInfo['cid']; ?>" />
+                                <input type="text" class="form-control input-cid" id="input-cid" name="cid" value="<?= $userInfo['cid']; ?>" />
                             </div>
                         </div>
 
@@ -169,7 +169,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-birthday" id="input-birthday" name="birthday" value="<?php echo $userInfo['birthday']; ?>">
+                                <input type="text" class="form-control input-birthday" id="input-birthday" name="birthday" value="<?= $userInfo['birthday']; ?>">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -181,7 +181,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-firstnameEng" id="input-firstnameEng" name="firstnameEng" value="<?php echo $userInfo['lastname_eng']; ?>" />
+                                <input type="text" class="form-control input-firstnameEng" id="input-firstnameEng" name="firstnameEng" value="<?= $userInfo['lastname_eng']; ?>" />
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -193,7 +193,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-lastnameEng" id="input-lastnameEng" name="lastnameEng" value="<?php echo $userInfo['firstname_eng']; ?>" />
+                                <input type="text" class="form-control input-lastnameEng" id="input-lastnameEng" name="lastnameEng" value="<?= $userInfo['firstname_eng']; ?>" />
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -205,7 +205,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-email" id="input-email" name="email" value="<?php echo $userInfo['email']; ?>" />
+                                <input type="text" class="form-control input-email" id="input-email" name="email" value="<?= $userInfo['email']; ?>" />
                             </div>
                         </div>
 
@@ -220,7 +220,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-address-book"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-address" id="input-address" name="address" value="<?php echo $userInfo['address']; ?>">
+                                <input type="text" class="form-control input-address" id="input-address" name="address" value="<?= $userInfo['address']; ?>">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -251,7 +251,7 @@
                                     <span class="input-group-text"><i class="fas fa-address-book"></i></span>
                                 </div>
                                 <select class="form-control input-amphur" id="input-amphur" name="amphur">
-                                    <option value="<?php echo $userInfo['amphur_id']; ?>">
+                                    <option value="<?= $userInfo['amphur_id']; ?>">
                                         <?= view_cell('\App\Models\LocationModel::amphurName', ['id' => $userInfo['amphur_id']]) ?>
                                     </option>
                                 </select>
@@ -266,7 +266,7 @@
                                     <span class="input-group-text"><i class="fas fa-address-book"></i></span>
                                 </div>
                                 <select class="form-control input-district" id="input-district" name="district">
-                                    <option value="<?php echo $userInfo['district_id']; ?>">
+                                    <option value="<?= $userInfo['district_id']; ?>">
                                         <?= view_cell('\App\Models\LocationModel::districtName', ['id' => $userInfo['district_id']]) ?>
                                     </option>
                                 </select>
@@ -283,7 +283,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-mobile" id="input-mobile" name="mobile" value="<?php echo $userInfo['mobile']; ?>">
+                                <input type="text" class="form-control input-mobile" id="input-mobile" name="mobile" value="<?= $userInfo['mobile']; ?>">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -332,7 +332,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-tags"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-branch" id="input-branch" name="branch" value="<?php echo $userInfo['branch']; ?>">
+                                <input type="text" class="form-control input-branch" id="input-branch" name="branch" value="<?= $userInfo['branch']; ?>">
                             </div>
                         </div>
                     </div>
@@ -346,7 +346,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-tags"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-positionNo" id="input-positionNo" name="positionNo" value="<?php echo $userInfo['position_number']; ?>">
+                                <input type="text" class="form-control input-positionNo" id="input-positionNo" name="positionNo" value="<?= $userInfo['position_number']; ?>">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-2">
@@ -357,7 +357,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-startDate" id="input-startDate" name="startDate" value="<?php echo $userInfo['start_date']; ?>">
+                                <input type="text" class="form-control input-startDate" id="input-startDate" name="startDate" value="<?= $userInfo['start_date']; ?>">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-2">
@@ -368,7 +368,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-stopDate" id="input-stopDate" name="stopDate" value="<?php echo $userInfo['stop_date'] != '0000-00-00' ? $userInfo['stop_date'] : '' ?>">
+                                <input type="text" class="form-control input-stopDate" id="input-stopDate" name="stopDate" value="<?= $userInfo['stop_date'] != '0000-00-00' ? $userInfo['stop_date'] : '' ?>">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -379,7 +379,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-wallet"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-accountNo" id="input-accountNo" name="accountNo" value="<?php echo $userInfo['account_number']; ?>">
+                                <input type="text" class="form-control input-accountNo" id="input-accountNo" name="accountNo" value="<?= $userInfo['account_number']; ?>">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -390,7 +390,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                                 </div>
-                                <input type="text" class="form-control input-salary" id="input-salary" name="salary" value="<?php echo $userInfo['salary']; ?>">
+                                <input type="text" class="form-control input-salary" id="input-salary" name="salary" value="<?= $userInfo['salary']; ?>">
                             </div>
                         </div>
                     </div>
@@ -444,7 +444,7 @@
                                     <?php foreach ($level as $row) : ?>
                                         <option <?php if ($userInfo['level_id'] == $row->id) {
                                                     echo 'selected="selected"';
-                                                } ?> value="<?php echo $row->id ?>"><?php echo $row->level_name ?></option>
+                                                } ?> value="<?= $row->id ?>"><?= $row->level_name ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -538,7 +538,7 @@
                     </div>
 
                 </div>
-                <input type="hidden" class="form-control input-hospcode" id="hospcode" name="hospcode" value="<?php echo $userInfo['hospcode']; ?>">
+                <input type="hidden" class="form-control input-hospcode" id="hospcode" name="hospcode" value="<?= $userInfo['hospcode']; ?>">
 
                 <div class="mt-5 border-t-1 brc-secondary-l2 py-35 mx-n25">
                     <div class="text-center">

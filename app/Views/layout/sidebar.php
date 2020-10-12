@@ -53,7 +53,7 @@
             <nav aria-label="Main">
                 <ul class="nav flex-column mt-2 has-active-border">
 
-                    <li <?php echo $title == 'Dashboard' ? "class='nav-item active open'" : "class='nav-item'" ?>>
+                    <li <?= $title == 'Dashboard' ? "class='nav-item active open'" : "class='nav-item'" ?>>
                         <a href='dashboard' class="nav-link">
                             <i class="nav-icon fa fa-tachometer-alt nav-icon-round bgc-primary-tp1"></i>
                             <span class="nav-text fadeable">
@@ -64,7 +64,7 @@
 
                     </li>
 
-                    <li <?php echo $title == 'ระบบบุคลากร' || $title == 'เพิ่มข้อมูลบุคลากร' ? "class='nav-item active open'" : "class='nav-item'" ?>>
+                    <li <?= $title == 'ระบบบุคลากร' || $title == 'เพิ่มข้อมูลบุคลากร' ? "class='nav-item active open'" : "class='nav-item'" ?>>
 
                         <a href="#" class="nav-link dropdown-toggle">
                             <i class="nav-icon fas fa-users nav-icon-round bgc-orange-tp1"></i>
@@ -74,16 +74,16 @@
                             <b class="caret fa fa-angle-left rt-n90"></b>
                         </a>
 
-                        <div class="hideable submenu collapse <?php echo $title == 'ระบบบุคลากร' || $title == 'เพิ่มข้อมูลบุคลากร' ? 'show' : '' ?>">
+                        <div class="hideable submenu collapse <?= $title == 'ระบบบุคลากร' || $title == 'เพิ่มข้อมูลบุคลากร' ? 'show' : '' ?>">
                             <ul class="submenu-inner">
-                                <li class="<?php echo $title  == 'ระบบบุคลากร' ? 'nav-item active' : 'nav-item' ?>">
+                                <li class="<?= $title  == 'ระบบบุคลากร' ? 'nav-item active' : 'nav-item' ?>">
                                     <a href='hr' class="nav-link">
                                         <span class="nav-text">
                                             <span>ข้อมูลบุคลากร</span>
                                         </span>
                                     </a>
                                 </li>
-                                <li class="<?php echo $title  == 'เพิ่มข้อมูลบุคลากร' ? 'nav-item active' : 'nav-item' ?>">
+                                <li class="<?= $title  == 'เพิ่มข้อมูลบุคลากร' ? 'nav-item active' : 'nav-item' ?>">
                                     <a href='hr/register' class="nav-link">
 
                                         <span class="nav-text">
@@ -100,7 +100,7 @@
 
                     </li>
 
-                    <li <?php echo $title == 'แผนงาน' || $title == 'ผลผลิต' || $title == 'กิจกรรม' || $title == 'โครงการ' ? "class='nav-item active open'" : "class='nav-item'" ?>>
+                    <li <?= $title == 'แผนงาน' || $title == 'ผลผลิต' || $title == 'กิจกรรม' || $title == 'โครงการ' ? "class='nav-item active open'" : "class='nav-item'" ?>>
 
                         <a href="#" class="nav-link dropdown-toggle">
                             <i class="nav-icon fas fa-layer-group nav-icon-round bgc-green-tp1"></i>
@@ -110,16 +110,16 @@
                             <b class="caret fa fa-angle-left rt-n90"></b>
                         </a>
 
-                        <div class="hideable submenu collapse <?php echo $title == 'แผนงาน' || $title == 'ผลผลิต' || $title == 'กิจกรรม' || $title == 'โครงการ' ? 'show' : '' ?>">
+                        <div class="hideable submenu collapse <?= $title == 'แผนงาน' || $title == 'ผลผลิต' || $title == 'กิจกรรม' || $title == 'โครงการ' ? 'show' : '' ?>">
                             <ul class="submenu-inner">
-                                <li class="<?php echo $title  == 'แผนงาน' ? 'nav-item active' : 'nav-item' ?>">
+                                <li class="<?= $title  == 'แผนงาน' ? 'nav-item active' : 'nav-item' ?>">
                                     <a href='project/plan' class="nav-link">
                                         <span class="nav-text">
                                             <span>แผนงาน</span>
                                         </span>
                                     </a>
                                 </li>
-                                <li class="<?php echo $title  == 'ผลผลิต' ? 'nav-item active' : 'nav-item' ?>">
+                                <li class="<?= $title  == 'ผลผลิต' ? 'nav-item active' : 'nav-item' ?>">
                                     <a href='project/product' class="nav-link">
 
                                         <span class="nav-text">
@@ -127,7 +127,7 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="<?php echo $title  == 'กิจกรรม' ? 'nav-item active' : 'nav-item' ?>">
+                                <li class="<?= $title  == 'กิจกรรม' ? 'nav-item active' : 'nav-item' ?>">
                                     <a href='project/activity' class="nav-link">
 
                                         <span class="nav-text">
@@ -135,7 +135,7 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="<?php echo $title  == 'โครงการ' ? 'nav-item active' : 'nav-item' ?>">
+                                <li class="<?= $title  == 'โครงการ' ? 'nav-item active' : 'nav-item' ?>">
                                     <a href='project/program' class="nav-link">
 
                                         <span class="nav-text">
@@ -151,7 +151,7 @@
 
                     </li>
 
-                    <li <?php echo $title == 'ขออนุมัติไปราชการ' || $title == 'ขออนุมัติจัดประชุม' ? "class='nav-item active open'" : "class='nav-item'" ?>>
+                    <li <?= $title == 'ขออนุมัติไปราชการ' || $title == 'ขออนุมัติจัดประชุม' ? "class='nav-item active open'" : "class='nav-item'" ?>>
 
                         <a href="#" class="nav-link dropdown-toggle">
                             <i class="nav-icon fas fa-city nav-icon-round bgc-info-tp1"></i>
@@ -162,16 +162,16 @@
                             <b class="caret fa fa-angle-left rt-n90"></b>
                         </a>
 
-                        <div class="hideable submenu collapse <?php echo $title == 'ขออนุมัติไปราชการ' || $title == 'ขออนุมัติจัดประชุม' ? 'show' : '' ?>">
+                        <div class="hideable submenu collapse <?= $title == 'ขออนุมัติไปราชการ' || $title == 'ขออนุมัติจัดประชุม' ? 'show' : '' ?>">
                             <ul class="submenu-inner">
-                                <li class="<?php echo $title  == 'ขออนุมัติไปราชการ' ? 'nav-item active' : 'nav-item' ?>">
+                                <li class="<?= $title  == 'ขออนุมัติไปราชการ' ? 'nav-item active' : 'nav-item' ?>">
                                     <a href='planning/training' class="nav-link">
                                         <span class="nav-text">
                                             <span>ขออนุมัติไปราชการ</span>
                                         </span>
                                     </a>
                                 </li>
-                                <li class="<?php echo $title  == 'ขออนุมัติจัดประชุม' ? 'nav-item active' : 'nav-item' ?>">
+                                <li class="<?= $title  == 'ขออนุมัติจัดประชุม' ? 'nav-item active' : 'nav-item' ?>">
                                     <a href='planning/meeting' class="nav-link">
 
                                         <span class="nav-text">

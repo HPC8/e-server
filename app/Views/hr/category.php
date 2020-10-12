@@ -6,7 +6,7 @@
     <h1 class="page-title text-primary-d2 text-120">
         <i class="fas fa-database"></i>
 
-        ตารางรายชื่อ<?php echo $category[0]->category_name; ?>
+        ตารางรายชื่อ<?= $category[0]->category_name; ?>
     </h1>
 
     <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
@@ -55,21 +55,21 @@
             foreach ($listCategory as $row) : ?>
                 <tr>
                     <td>
-                        <?php echo  $no; ?>
+                        <?= $no; ?>
                     </td>
                     <td>
-                        <?php echo  $row->hospcode; ?>
-                    </td>
-
-                    <td>
-                        <?php echo  $row->titlename . $row->firstname . ' ' . $row->lastname; ?>
+                        <?= $row->hospcode; ?>
                     </td>
 
                     <td>
-                        <?php echo  $row->position_name . $row->level_name; ?>
+                        <?= $row->titlename . $row->firstname . ' ' . $row->lastname; ?>
+                    </td>
+
+                    <td>
+                        <?= $row->position_name . $row->level_name; ?>
                     </td>
                     <td>
-                        <?php echo  $row->department_name; ?>
+                        <?= $row->department_name; ?>
                     </td>
                     <td>
                         <div class='action-buttons'>
@@ -86,7 +86,8 @@
                     </td>
 
                 </tr>
-            <?php $no++; endforeach;  ?>
+            <?php $no++;
+            endforeach;  ?>
         </tbody>
     </table>
 

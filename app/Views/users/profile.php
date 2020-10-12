@@ -31,7 +31,7 @@
                     </div>
                     <div class="text-center mt-1">
                         <h5 class="text-120 text-dark-m3">
-                            <?php echo $user['titlename'] . $user['firstname'] . ' ' . $user['lastname']; ?>
+                            <?= $user['titlename'] . $user['firstname'] . ' ' . $user['lastname']; ?>
                         </h5>
                     </div>
 
@@ -112,7 +112,7 @@
                                                 รหัสประจำตัว
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['hospcode']; ?>
+                                                <?= $user['hospcode']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -120,7 +120,7 @@
                                                 ชื่อ-สกุล
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['titlename'] . $user['firstname'] . ' ' . $user['lastname']; ?>
+                                                <?= $user['titlename'] . $user['firstname'] . ' ' . $user['lastname']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -128,7 +128,7 @@
                                                 ชื่อ-สกุล (English)
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['lastname_eng'] . ' ' . $user['firstname_eng']; ?>
+                                                <?= $user['lastname_eng'] . ' ' . $user['firstname_eng']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -136,7 +136,7 @@
                                                 เพศ
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['sex_name']; ?>
+                                                <?= $user['sex_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -144,7 +144,7 @@
                                                 สถานภาพ
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['marital_name']; ?>
+                                                <?= $user['marital_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -168,7 +168,7 @@
                                                 กรุ๊ปเลือด
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['blood']; ?>
+                                                <?= $user['blood']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -176,7 +176,7 @@
                                                 เลขบัตรประชาชน
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['cid']; ?>
+                                                <?= $user['cid']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -184,7 +184,7 @@
                                                 ที่อยู่
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['address'] . " ต." . $user['district_name'] . " อ." . $user['amphur_name'] . " จ." . $user['province_name'] . " " . $user['zipcode']; ?>
+                                                <?= $user['address'] . " ต." . $user['district_name'] . " อ." . $user['amphur_name'] . " จ." . $user['province_name'] . " " . $user['zipcode']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -192,7 +192,7 @@
                                                 อีเมล์
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['email']; ?>
+                                                <?= $user['email']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -200,7 +200,7 @@
                                                 เบอร์โทรศัพท์
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['mobile']; ?>
+                                                <?= $user['mobile']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -208,7 +208,7 @@
                                                 การศึกษา
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['education_name'] . " " . $user['degree_name'] . " สาขา " . $user['branch']; ?>
+                                                <?= $user['education_name'] . " " . $user['degree_name'] . " สาขา " . $user['branch']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -216,7 +216,7 @@
                                                 ประเภทบุคลากร
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['category_name']; ?>
+                                                <?= $user['category_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -224,7 +224,7 @@
                                                 ตำแหน่ง
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['position_name'] . " " . $user['level_name']; ?>
+                                                <?= $user['position_name'] . " " . $user['level_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -232,7 +232,7 @@
                                                 งาน
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['section_name']; ?>
+                                                <?= $user['section_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -240,7 +240,7 @@
                                                 กลุ่ม
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['department_name']; ?>
+                                                <?= $user['department_name']; ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -264,7 +264,7 @@
                                                 สถานะการปฏิบัติงาน
                                             </td>
                                             <td class="text-90 text-600 text-secondary-d2 text-left" width="75%">
-                                                <?php echo $user['status'] == '1' ? 'กำลังปฏิบัติงาน' : 'จำหน่ายแล้ว' ?>
+                                                <?= $user['status'] == '1' ? 'กำลังปฏิบัติงาน' : 'จำหน่ายแล้ว' ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -329,7 +329,7 @@
                     <!-- profile edit tab -->
                     <div class="tab-pane px-1 px-md-2 px-lg-4" id="profile-tab-note">
                         <div class="alert bgc-secondary-l3 text-dark-m1 border-none border-l-4 brc-blue radius-0 py-3 text-115">
-                            <?php echo $user['note']; ?>
+                            <?= $user['note']; ?>
                         </div>
                     </div>
 

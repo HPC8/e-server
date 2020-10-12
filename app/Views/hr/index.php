@@ -45,7 +45,7 @@
                         <?php foreach ($category as $row) : ?>
                             <tr>
                                 <td class="text-dark-m2"><i class="fa fa-chevron-right text-blue" aria-hidden="true"> </i>
-                                    <a href='hr/category/<?= $row->category_id; ?>'><?php echo $row->category_name; ?></a>
+                                    <a href='hr/category/<?= $row->category_id; ?>'><?= $row->category_name; ?></a>
                                 </td>
                                 <td class="text-center">
                                     <a href="#" class="text-primary-d2"><B><?= view_cell('\App\Controllers\Hr::count', ['id' => $row->category_id]) ?></B></a>

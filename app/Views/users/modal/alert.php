@@ -13,7 +13,7 @@
             </div>
 
             <div class="modal-body alert bgc-red-l4 border-none border-l-4 brc-red-tp1 radius-0">
-                <?php echo session('info');
+                <?= session('info');
                 session()->remove('msg'); ?>
             </div>
 
@@ -41,7 +41,7 @@
             </div>
 
             <div class="modal-body alert bgc-green-l4 border-none border-l-4 brc-green-tp1 radius-0">
-                <?php echo session('info');
+                <?= session('info');
                 session()->remove('msg'); ?>
             </div>
 

@@ -1,8 +1,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <base href="<?php echo base_url() ?>/" />
+    <base href="<?= base_url() ?>/" />
 
-    <title>E-Service : <?php echo $title; ?></title>
+    <title>E-Service : <?= $title; ?></title>
 
     <!-- include common vendor stylesheets & fontawesome -->
     <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.css">

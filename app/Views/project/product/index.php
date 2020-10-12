@@ -49,14 +49,14 @@
             foreach ($productList as $row) : ?>
                 <tr>
                     <td>
-                        <?php echo  $no; ?>
+                        <?=  $no; ?>
                     </td>
                     <td>
-                        <?php echo  $row->product_name; ?>
+                        <?=  $row->product_name; ?>
                     </td>
 
                     <td>
-                        <?php echo  $row->product_id; ?>
+                        <?=  $row->product_id; ?>
                     </td>
                     <td>
                         <div class='action-buttons'>

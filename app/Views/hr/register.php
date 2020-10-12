@@ -22,9 +22,9 @@
 
                         <div class="input-group">
                             <label for="hospcode" class="text-brown">
-                                <?php echo "<h5><B>" . $codeLast . "</B></h5>"; ?>
+                                <?= "<h5><B>" . $codeLast . "</B></h5>"; ?>
                             </label>
-                            <input type="hidden" class="form-control input-hospcode" id="hospcode" name="hospcode" value="<?php echo $codeLast; ?>">
+                            <input type="hidden" class="form-control input-hospcode" id="hospcode" name="hospcode" value="<?= $codeLast; ?>">
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-3">

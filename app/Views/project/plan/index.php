@@ -49,14 +49,14 @@
             foreach ($planList as $row) : ?>
                 <tr>
                     <td>
-                        <?php echo  $no; ?>
+                        <?=  $no; ?>
                     </td>
                     <td>
-                        <?php echo  $row->plan_name; ?>
+                        <?=  $row->plan_name; ?>
                     </td>
 
                     <td>
-                        <?php echo  $row->plan_id; ?>
+                        <?=  $row->plan_id; ?>
                     </td>
                     <td>
                         <div class='action-buttons'>

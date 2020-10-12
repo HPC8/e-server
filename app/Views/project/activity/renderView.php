@@ -13,7 +13,7 @@
                 ชื่อผลผลิต
             </td>
             <td class="text-90 text-secondary-d2 text-left" width="80%">
-                <?php echo view_cell('\App\Models\ProjectModel::activityName', ['id' => $activity['product_id']]); ?>
+                <?= view_cell('\App\Models\ProjectModel::activityName', ['id' => $activity['product_id']]); ?>
             </td>
         </tr>
         <tr>
@@ -29,7 +29,7 @@
                 ผู้บันทึกข้อมูล
             </td>
             <td class="text-90 text-secondary-d2 text-left" width="80%">
-                <?php echo view_cell('\App\Models\UserModel::getUsername', ['data' => $activity['created_code']]);
+                <?= view_cell('\App\Models\UserModel::getUsername', ['data' => $activity['created_code']]);
                 echo '<small class="text-90"> #วันที่ ' . view_cell('\App\Libraries\Thaidate::dateFulltime', ['date' => $activity['created']]) . '</small>'; ?>
             </td>
         </tr>
@@ -40,7 +40,7 @@
                     ผู้แก้ไขข้อมูล
                 </td>
                 <td class="text-90 text-secondary-d2 text-left" width="80%">
-                    <?php echo view_cell('\App\Models\UserModel::getUsername', ['data' => $activity['modified_code']]);
+                    <?= view_cell('\App\Models\UserModel::getUsername', ['data' => $activity['modified_code']]);
                     echo '<small class="text-90"> #วันที่ ' . view_cell('\App\Libraries\Thaidate::dateFulltime', ['date' => $activity['modified']]) . '</small>'; ?>
                 </td>
             </tr>

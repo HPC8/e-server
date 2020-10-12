@@ -13,7 +13,7 @@
                 <?php for ($i = date("Y") + 543; $i <= date("Y") + 543 + 5; $i++) { ?>
                     <option <?php if ($i == $plan['plan_year']) {
                                 echo 'selected="selected"';
-                            } ?> value="<?php echo $i ?>"><?php echo $i ?> </option>
+                            } ?> value="<?= $i ?>"><?= $i ?> </option>
                 <?php } ?>
             </select>
         </div>

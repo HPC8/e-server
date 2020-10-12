@@ -35,7 +35,7 @@
                 ชื่อกิจกรรม
             </td>
             <td class="text-90 text-secondary-d2 text-left" width="80%">
-                <?php echo view_cell('\App\Models\ProjectModel::activityName', ['id' => $program['activity_id']]); ?>
+                <?= view_cell('\App\Models\ProjectModel::activityName', ['id' => $program['activity_id']]); ?>
             </td>
         </tr>
         <tr>
@@ -59,7 +59,7 @@
                 ผู้บันทึกข้อมูล
             </td>
             <td class="text-90 text-secondary-d2 text-left" width="80%">
-                <?php echo view_cell('\App\Models\UserModel::getUsername', ['data' => $program['created_code']]);
+                <?= view_cell('\App\Models\UserModel::getUsername', ['data' => $program['created_code']]);
                 echo '<small class="text-90"> #วันที่ ' . view_cell('\App\Libraries\Thaidate::dateFulltime', ['date' => $program['created']]) . '</small>'; ?>
             </td>
         </tr>
@@ -70,7 +70,7 @@
                     ผู้แก้ไขข้อมูล
                 </td>
                 <td class="text-90 text-secondary-d2 text-left" width="80%">
-                    <?php echo view_cell('\App\Models\UserModel::getUsername', ['data' => $program['modified_code']]);
+                    <?= view_cell('\App\Models\UserModel::getUsername', ['data' => $program['modified_code']]);
                     echo '<small class="text-90"> #วันที่ ' . view_cell('\App\Libraries\Thaidate::dateFulltime', ['date' => $program['modified']]) . '</small>'; ?>
                 </td>
             </tr>

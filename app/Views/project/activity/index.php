@@ -49,14 +49,14 @@
             foreach ($activityList as $row) : ?>
                 <tr>
                     <td>
-                        <?php echo  $no; ?>
+                        <?=  $no; ?>
                     </td>
                     <td>
-                        <?php echo  $row->activity_name; ?>
+                        <?=  $row->activity_name; ?>
                     </td>
 
                     <td>
-                        <?php echo  $row->activity_id; ?>
+                        <?=  $row->activity_id; ?>
                     </td>
                     <td>
                         <div class='action-buttons'>
