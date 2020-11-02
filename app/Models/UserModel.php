@@ -94,7 +94,7 @@ class UserModel extends Model
         $builder = $this->db->table($this->_adminPlanning);
         $builder->where('hospcode', $id);
         $query = $builder->get();
-        return $query->getRowArray();
+        return $query->getResult();
     }
 
     public function lineRegister($line, $hospcode)

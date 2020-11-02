@@ -26,7 +26,7 @@
                         ?>
                     </div>
                     <div class="text-center mt-3">
-                        <img data-toggle="modal" data-target="#icon" src="assets/upload/users/signature/<?= $userInfo['hospcode'] . ".gif"; ?>" style="max-height:50px;height:100%" />
+                        <img data-toggle="modal" data-target="#icon" src="uploads/signature/<?= $userInfo['hospcode'] . ".gif"; ?>" style="max-height:50px;height:100%" />
                     </div>
                     <div class="text-center mt-1">
                         <h5 class="text-120 text-dark-m3">

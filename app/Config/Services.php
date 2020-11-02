@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 use CodeIgniter\Config\Services as CoreServices;
 
@@ -18,13 +20,16 @@ use CodeIgniter\Config\Services as CoreServices;
 class Services extends CoreServices
 {
 
-	//    public static function example($getShared = true)
-	//    {
-	//        if ($getShared)
-	//        {
-	//            return static::getSharedInstance('example');
-	//        }
-	//
-	//        return new \CodeIgniter\Example();
-	//    }
+	public static function LINE_CLIENT_ID()
+	{
+		return  '1655086900';
+	}
+	public static function LINE_CLIENT_SECRET()
+	{
+		return  '69e1fa9458832c1d7b652eefdf41d66a';
+	}
+	public static function LINE_REDIRECT_URL()
+	{
+		return 'https://apps.anamai.moph.go.th/e-service/public/users/lineCallback';
+	}
 }

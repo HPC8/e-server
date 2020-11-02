@@ -203,6 +203,13 @@ class Planning extends BaseController
             $data['trainingStatus'] = $this->planningModel->trainingStatus();
 
 
+
+            echo '<pre>';
+            print_r($data['admin']);
+            echo '</pre>';
+            exit;
+
+
             if (!empty($data['trainingInfo'])) {
                 if ($data['trainingInfo']['trainStatus'] == "1") {
                     if ($data['trainingInfo']['hospcode'] == $data['user']['hospcode']) {
@@ -218,6 +225,28 @@ class Planning extends BaseController
                 } elseif ($data['trainingInfo']['trainStatus'] == "2") {
                     if (!empty($data['admin'])) {
                         if ($data['admin']['level'] == "2") {
+                            $year = $this->thaidate->fiscalYear($data['trainingInfo']['startDate']);
+                            $data['planList'] = $this->projectModel->planList($year);
+                            return view('planning/training/finance', $data);
+                        } else {
+                            $sms = array(
+                                'msg' => 1,
+                                'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
+                            );
+                            session()->set($sms);
+                            return redirect('training');
+                        }
+                    } else {
+                        $sms = array(
+                            'msg' => 1,
+                            'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
+                        );
+                        session()->set($sms);
+                        return redirect('training');
+                    }
+                } elseif ($data['trainingInfo']['trainStatus'] == "3") {
+                    if (!empty($data['admin'])) {
+                        if ($data['admin']['level'] == "3") {
                             $year = $this->thaidate->fiscalYear($data['trainingInfo']['startDate']);
                             $data['planList'] = $this->projectModel->planList($year);
                             return view('planning/training/plan', $data);
@@ -245,6 +274,8 @@ class Planning extends BaseController
                     session()->set($sms);
                     return redirect('training');
                 }
+            } else {
+                return redirect('training');
             }
         } else {
             return redirect('auth');
@@ -552,9 +583,16 @@ class Planning extends BaseController
 
     public function demo()
     {
-        $id = '10005';
+        $id = '10007';
 
         $data['admin'] = $this->userModel->adminPlanning($id);
+
+        foreach ($data['admin'] as $row) {
+            if ($row->hospcode == $id and $row->level == '2') {
+                echo $row->level;
+            }
+        }
+
 
         echo '<pre>';
         print_r($data);

@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use Config\Services;
 use App\Models\UserModel;
 use App\Libraries\PassEncrypt;
 use App\Models\HrModel;
 use App\Models\LocationModel;
 use App\Libraries\MyLibrary;
 use App\Libraries\LineAPI;
+use \Firebase\JWT\JWT;
 
 class Users extends BaseController
 {
@@ -36,9 +38,9 @@ class Users extends BaseController
 	public function auth()
 	{
 		$data['line'] = [
-			"client_id" => $this->lineAPI->CLIENT_ID(),
-			"client_secret" => $this->lineAPI->CLIENT_SECRET(),
-			"redirect_uri" => $this->lineAPI->REDIRECT_URL()
+			"client_id" => Services::LINE_CLIENT_ID(),
+			"client_secret" => Services::LINE_CLIENT_SECRET(),
+			"redirect_uri" => Services::LINE_REDIRECT_URL()
 		];
 		return view('users/auth', $data);
 	}
@@ -99,15 +101,16 @@ class Users extends BaseController
 
 	public function lineCallback()
 	{
+		$data['user'] = $this->userModel->getUser(session('userId'));
 		if (isset($_GET["code"])) {
 			try {
 				// Step 1. GET Access Token 
 				$post_data = [
 					"grant_type" => 'authorization_code',
-					"client_id" => $this->lineAPI->CLIENT_ID(),
-					"client_secret" => $this->lineAPI->CLIENT_SECRET(),
+					"client_id" => Services::LINE_CLIENT_ID(),
+					"client_secret" => Services::LINE_CLIENT_SECRET(),
 					"code" => $_GET["code"],
-					"redirect_uri" => $this->lineAPI->REDIRECT_URL()
+					"redirect_uri" => Services::LINE_REDIRECT_URL()
 				];
 
 				$headers[] = "Content-Type: application/x-www-form-urlencoded";
@@ -126,6 +129,7 @@ class Users extends BaseController
 
 				// Step 2. GET User Profile
 				$accessToken = $response['access_token'];
+				$idToken = $response['id_token'];
 				if (!empty($accessToken)) {
 					session()->set('access_token', $accessToken);
 					$headerData = [
@@ -144,38 +148,83 @@ class Users extends BaseController
 					curl_close($ch2);
 
 					$result = json_decode($result, true);
+					$jwt = JWT::decode($idToken, Services::LINE_CLIENT_SECRET(), array('HS256'));
 					if ($httpcode == 200) {
 
-						$data['line'] = [
-							"userId" => $result['userId'],
-							"name" => $result['displayName'],
-							"picture" => $result['pictureUrl'],
+						// $data['LINE'] = [
+						// 	"userId" => $result['userId'],
+						// 	"name" => $result['displayName'],
+						// 	"picture" => $result['pictureUrl'],
+						// ];
+
+						$data['LINE'] = [
+							"userId" => $jwt->sub,
+							"name" => $jwt->name,
+							"picture" => $jwt->picture,
+							"email" => $jwt->email,
 						];
+						// echo '<pre>';
+						// print_r($data);
+						// echo '</pre>';
+						// exit;
 
 						$query = $this->userModel->checkLineID($result['userId']);
 						if ($query) {
 							session()->set('isLoggedIn', TRUE);
 							session()->set('userId', $query['emp_id']);
-
 							return redirect()->to('index');
 						} else {
-							$query = $this->lineConnect($result['userId']);
-
-							if (!empty($query)) {
-								$sms = array(
-									'msg' => 0,
-									'info' => 'คุณได้ทำการเชื่อมต่อ LINE Account เรียบร้อย',
-								);
-								session()->set($sms);
-							} else {
+							if (empty($data['user'])) {
 								$sms = array(
 									'msg' => 1,
-									'info' => 'ไม่สามารถเชื่อมต่อ LINE Account กับบัญชีผู้ใช้งานได้ กรุณาลงทะเบียนก่อนใช้งานฟังชั่นนี้!',
+									'info' => 'กรุณาลงทะเบียนก่อนใช้งานฟังชั่นนี้!',
 								);
 								session()->set($sms);
+								return redirect()->to('auth');
+							} else {
+								if ($jwt->email != null) {
+									$query = $this->lineConnect($result['userId'], $jwt->email);
+									if (!empty($query)) {
+										$sms = array(
+											'msg' => 0,
+											'info' => 'คุณได้ทำการเชื่อมต่อ LINE Account เรียบร้อย',
+										);
+										session()->set($sms);
+									} else {
+										$sms = array(
+											'msg' => 1,
+											'info' => 'ไม่สามารถเชื่อมต่อกับบัญชีผู้ใช้งานกับ LINE Account กรุณาตรวจสอบ Email.',
+										);
+										session()->set($sms);
+									}
+									return redirect()->to('profile');
+								} else {
+									$sms = array(
+										'msg' => 1,
+										'info' => 'ไม่สามารถเชื่อมต่อกับบัญชีผู้ใช้งานกับ LINE Account กรุณาตรวจสอบ Email.',
+									);
+									session()->set($sms);
+									return redirect()->to('auth');
+								}
 							}
 
-							return redirect()->to('profile');
+							//$query = $this->lineConnect($result['userId']);
+
+							// if (!empty($query)) {
+							// 	$sms = array(
+							// 		'msg' => 0,
+							// 		'info' => 'คุณได้ทำการเชื่อมต่อ LINE Account เรียบร้อย',
+							// 	);
+							// 	session()->set($sms);
+							// } else {
+							// 	$sms = array(
+							// 		'msg' => 1,
+							// 		'info' => 'ไม่สามารถเชื่อมต่อ LINE Account กับบัญชีผู้ใช้งานได้ กรุณาลงทะเบียนก่อนใช้งานฟังชั่นนี้!',
+							// 	);
+							// 	session()->set($sms);
+							// }
+
+							// return redirect()->to('profile');
 						}
 					} else {
 						return redirect()->to('auth');
@@ -192,8 +241,8 @@ class Users extends BaseController
 		try {
 			$post_data = [
 				"access_token" => session('access_token'),
-				"client_id" => $this->lineAPI->CLIENT_ID(),
-				"client_secret" => $this->lineAPI->CLIENT_SECRET(),
+				"client_id" => Services::LINE_CLIENT_ID(),
+				"client_secret" => Services::LINE_CLIENT_SECRET(),
 			];
 
 			$headers[] = "Content-Type: application/x-www-form-urlencoded";
@@ -214,7 +263,7 @@ class Users extends BaseController
 		}
 	}
 
-	public function lineConnect($userId)
+	public function lineConnect($userId, $email)
 	{
 		$data = [];
 		$data['user'] = $this->userModel->getUser(session('userId'));
@@ -223,7 +272,11 @@ class Users extends BaseController
 				"line_id" => $userId,
 				"line_date" => date("Y-m-d H:i:s"),
 			];
-			return $this->userModel->lineRegister($line, $data['user']['hospcode']);
+			if ($data['user']['email'] == $email) {
+				return $this->userModel->lineRegister($line, $data['user']['hospcode']);
+			}
+		} else {
+			return null;
 		}
 	}
 
@@ -240,9 +293,9 @@ class Users extends BaseController
 			$data['breadcrumb'] = $breadcrumb;
 
 			$data['line'] = [
-				"client_id" => $this->lineAPI->CLIENT_ID(),
-				"client_secret" => $this->lineAPI->CLIENT_SECRET(),
-				"redirect_uri" => $this->lineAPI->REDIRECT_URL()
+				"client_id" => Services::LINE_CLIENT_ID(),
+				"client_secret" => Services::LINE_CLIENT_SECRET(),
+				"redirect_uri" => Services::LINE_REDIRECT_URL()
 			];
 
 			return view('users/profile', $data);

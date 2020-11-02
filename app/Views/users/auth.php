@@ -164,13 +164,13 @@
                                                     <div class="mt-n4 bgc-white-tp2 px-3 py-1 text-secondary-d3 text-90">
                                                         Login with Social Media</div>
                                                     <div class="my-2">
-                                                        <a href='https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=<?= $line['client_id']; ?>&redirect_uri=<?= $line['redirect_uri']; ?>&state=ci&scope=profile%20openid&nonce=_ls978_&max_age=0' class="btn btn-bgc-white btn-lighter-success btn-h-success btn-a-success btn-lg px-25 mx-1">
+                                                        <a href='https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=<?php echo $line['client_id']; ?>&redirect_uri=<?php echo $line['redirect_uri']; ?>&state=anamai&scope=profile%20openid%20email' class="btn btn-bgc-white btn-lighter-success btn-h-success btn-a-success btn-lg px-25 mx-1">
                                                             <i class="fab fa-line text-190"></i>
                                                         </a>
-                                                        <a href='#' class="btn btn-bgc-white btn-lighter-primary btn-h-primary btn-a-primary btn-lg px-25 mx-1">
+                                                        <a href='#' class="btn btn-bgc-white btn-lighter-primary btn-h-primary btn-a-primary btn-lg px-25 mx-1 disabled">
                                                             <i class="fab fa-facebook text-190"></i>
                                                         </a>
-                                                        <a href='#' class="btn btn-bgc-white btn-lighter-danger btn-h-danger btn-a-danger btn-lg px-25 mx-1">
+                                                        <a href='#' class="btn btn-bgc-white btn-lighter-danger btn-h-danger btn-a-danger btn-lg px-25 mx-1 disabled">
                                                             <i class="fab fa-google-plus text-190"></i>
                                                         </a>
 
