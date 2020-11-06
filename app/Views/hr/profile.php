@@ -1,7 +1,21 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
 
-
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card bcard">
+            <div class="card-header">
+                <h5 class="card-title">
+                    ข้อมูลบุคลากร
+                </h5>
+                <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
+                    P01-008
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
 <div class="row">
     <div class="col-12 col-md-4">
         <div class="card bcard">

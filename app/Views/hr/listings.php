@@ -5,11 +5,10 @@
 <div class="page-header mb-2 pb-2 flex-column flex-sm-row align-items-start align-items-sm-center py-25 px-1">
     <h1 class="page-title text-primary-d2 text-120">
         <i class="fas fa-database"></i>
-
         ตารางรายชื่อบุคลากรทั้งหมด
     </h1>
-
     <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
+        P01-004
     </div>
 </div>
 

@@ -8,21 +8,8 @@
                 <h5 class="card-title">
                     ข้อมูลบุคลากร
                 </h5>
-
-                <div class="card-toolbar">
-
-
-                    <a href="#" data-action="reload" class="card-toolbar-btn text-green">
-                        <i class="fas fa-sync-alt"></i>
-                    </a>
-
-                    <a href="#" data-action="toggle" class="card-toolbar-btn text-grey-d1">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-
-                    <a href="#" data-action="close" class="card-toolbar-btn text-danger">
-                        <i class="fa fa-times"></i>
-                    </a>
+                <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
+                    P01-002
                 </div>
             </div>
             <div class="card-body p-0">

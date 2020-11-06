@@ -23,8 +23,7 @@
                 <?= view('layout/footer'); ?>
 
             </div>
-
-            <?= view('layout/settings'); ?>
+            
         </div>
 
     </div>

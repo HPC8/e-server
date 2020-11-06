@@ -59,7 +59,7 @@ class Thaidate
         }
     }
 
-    // return 31 ธันวาคม 2563 เวลา 10:10:10
+    // 31 ตุลาคม 2563 เวลา 10:10:10
     public function dateFulltime($date = '')
     {
         if ($date) {
@@ -141,29 +141,41 @@ class Thaidate
             }
             list($Y, $m) = explode('-', $date);
             switch ($m) {
-                case "01":$Y = $Y + 543;
+                case "01":
+                    $Y = $Y + 543;
                     break;
-                case "02":$Y = $Y + 543;
+                case "02":
+                    $Y = $Y + 543;
                     break;
-                case "03":$Y = $Y + 543;
+                case "03":
+                    $Y = $Y + 543;
                     break;
-                case "04":$Y = $Y + 543;
+                case "04":
+                    $Y = $Y + 543;
                     break;
-                case "05":$Y = $Y + 543;
+                case "05":
+                    $Y = $Y + 543;
                     break;
-                case "06":$Y = $Y + 543;
+                case "06":
+                    $Y = $Y + 543;
                     break;
-                case "07":$Y = $Y + 543;
+                case "07":
+                    $Y = $Y + 543;
                     break;
-                case "08":$Y = $Y + 543;
+                case "08":
+                    $Y = $Y + 543;
                     break;
-                case "09":$Y = $Y + 543;
+                case "09":
+                    $Y = $Y + 543;
                     break;
-                case "10":$Y = $Y + 543;
+                case "10":
+                    $Y = $Y + 543;
                     break;
-                case "11":$Y = $Y + 543;
+                case "11":
+                    $Y = $Y + 543;
                     break;
-                case "12":$Y = $Y + 543;
+                case "12":
+                    $Y = $Y + 543;
                     break;
             }
 
@@ -171,7 +183,6 @@ class Thaidate
         } else {
             return "ไม่ระบุ";
         }
-
     }
 
     // return 2563
@@ -234,30 +245,38 @@ class Thaidate
         } else {
             return "ไม่ระบุ";
         }
-
     }
 
     public function cutdate($date)
     {
         $strDay = date("d", strtotime($date));
         switch ($strDay) {
-            case "01":$strDay = "1";
+            case "01":
+                $strDay = "1";
                 break;
-            case "02":$strDay = "2";
+            case "02":
+                $strDay = "2";
                 break;
-            case "03":$strDay = "3";
+            case "03":
+                $strDay = "3";
                 break;
-            case "04":$strDay = "4";
+            case "04":
+                $strDay = "4";
                 break;
-            case "05":$strDay = "5";
+            case "05":
+                $strDay = "5";
                 break;
-            case "06":$strDay = "6";
+            case "06":
+                $strDay = "6";
                 break;
-            case "07":$strDay = "7";
+            case "07":
+                $strDay = "7";
                 break;
-            case "08":$strDay = "8";
+            case "08":
+                $strDay = "8";
                 break;
-            case "09":$strDay = "9";
+            case "09":
+                $strDay = "9";
                 break;
         }
         return "$strDay";
@@ -277,28 +296,55 @@ class Thaidate
             $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
 
             switch ($strDay) {
-                case "01":$strDay = "1";
+                case "01":
+                    $strDay = "1";
                     break;
-                case "02":$strDay = "2";
+                case "02":
+                    $strDay = "2";
                     break;
-                case "03":$strDay = "3";
+                case "03":
+                    $strDay = "3";
                     break;
-                case "04":$strDay = "4";
+                case "04":
+                    $strDay = "4";
                     break;
-                case "05":$strDay = "5";
+                case "05":
+                    $strDay = "5";
                     break;
-                case "06":$strDay = "6";
+                case "06":
+                    $strDay = "6";
                     break;
-                case "07":$strDay = "7";
+                case "07":
+                    $strDay = "7";
                     break;
-                case "08":$strDay = "8";
+                case "08":
+                    $strDay = "8";
                     break;
-                case "09":$strDay = "9";
+                case "09":
+                    $strDay = "9";
                     break;
             }
 
             $strMonthThai = $strMonthCut[$strMonth];
             return "$strDay $strMonthThai $strYear";
+        } else {
+            return "ไม่ระบุ";
+        }
+    }
+
+    // ตุลาคม 2556
+    public function fullMonthYear($date = '')
+    {
+        if ($date) {
+            if ($date == '0000-00-00') {
+                return "ไม่ระบุ";
+            }
+            $strYear = date("Y", strtotime($date)) + 543;
+            $strMonth = date("n", strtotime($date));
+            $strMonthCut = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฏาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+
+            $strMonthThai = $strMonthCut[$strMonth];
+            return "$strMonthThai $strYear";
         } else {
             return "ไม่ระบุ";
         }
@@ -322,6 +368,55 @@ class Thaidate
         }
     }
 
+    // 1 ตุลาคม
+    public function dateMonth($date = '')
+    {
+
+        if ($date) {
+            if ($date == '0000-00-00') {
+                return "ไม่ระบุ";
+            }
+            $strMonth = date("n", strtotime($date));
+            $strDay = date("d", strtotime($date));
+            $strMonthCut = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฏาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+
+            switch ($strDay) {
+                case "01":
+                    $strDay = "1";
+                    break;
+                case "02":
+                    $strDay = "2";
+                    break;
+                case "03":
+                    $strDay = "3";
+                    break;
+                case "04":
+                    $strDay = "4";
+                    break;
+                case "05":
+                    $strDay = "5";
+                    break;
+                case "06":
+                    $strDay = "6";
+                    break;
+                case "07":
+                    $strDay = "7";
+                    break;
+                case "08":
+                    $strDay = "8";
+                    break;
+                case "09":
+                    $strDay = "9";
+                    break;
+            }
+
+            $strMonthThai = $strMonthCut[$strMonth];
+            return "$strDay $strMonthThai";
+        } else {
+            return "ไม่ระบุ";
+        }
+    }
+
     // 1 ต.ค.
     public function dateShortMonth($date = '')
     {
@@ -334,23 +429,32 @@ class Thaidate
             $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
 
             switch ($strDay) {
-                case "01":$strDay = "1";
+                case "01":
+                    $strDay = "1";
                     break;
-                case "02":$strDay = "2";
+                case "02":
+                    $strDay = "2";
                     break;
-                case "03":$strDay = "3";
+                case "03":
+                    $strDay = "3";
                     break;
-                case "04":$strDay = "4";
+                case "04":
+                    $strDay = "4";
                     break;
-                case "05":$strDay = "5";
+                case "05":
+                    $strDay = "5";
                     break;
-                case "06":$strDay = "6";
+                case "06":
+                    $strDay = "6";
                     break;
-                case "07":$strDay = "7";
+                case "07":
+                    $strDay = "7";
                     break;
-                case "08":$strDay = "8";
+                case "08":
+                    $strDay = "8";
                     break;
-                case "09":$strDay = "9";
+                case "09":
+                    $strDay = "9";
                     break;
             }
 
@@ -376,4 +480,18 @@ class Thaidate
         }
     }
 
+    public function rangeDateFull($start, $end)
+    {
+        if ($this->fullmonth($start) == $this->fullmonth($end)) {
+            if ($this->cutdate($start) == $this->cutdate($end)) {
+                return $this->dateFullmonth($start);
+            } else {
+                return $this->cutdate($start) . '-' . $this->cutdate($end) . ' ' . $this->fullMonthYear($start);
+            }
+        } elseif ($this->yearth($start) == $this->yearth($end)) {
+            return $this->dateMonth($start) . ' - ' . $this->dateFullmonth($end);
+        } else {
+            return $this->dateFullmonth($start) . ' - ' . $this->dateFullmonth($end);
+        }
+    }
 }

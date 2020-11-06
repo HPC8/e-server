@@ -9,6 +9,9 @@
                 <i class="fas fa-user-cog text-dark-l3 mr-1"></i>
                 แก้ไขข้อมูลบุคลากร
             </h3>
+            <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
+                P01-006
+            </div>
         </div>
 
         <div class="card-body px-3 pb-1">

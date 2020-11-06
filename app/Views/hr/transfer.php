@@ -9,6 +9,9 @@
                 <i class="fas fa-user-slash text-dark-l3 mr-1"></i>
                 ปรับสถานะบุคลากร
             </h3>
+            <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
+                P01-007
+            </div>
         </div>
 
         <div class="card-body px-3 pb-1">

@@ -203,60 +203,23 @@ class Planning extends BaseController
             $data['trainingStatus'] = $this->planningModel->trainingStatus();
 
 
-
-            echo '<pre>';
-            print_r($data['admin']);
-            echo '</pre>';
-            exit;
-
-
             if (!empty($data['trainingInfo'])) {
-                if ($data['trainingInfo']['trainStatus'] == "1") {
-                    if ($data['trainingInfo']['hospcode'] == $data['user']['hospcode']) {
-                        return view('planning/training/edit', $data);
-                    } else {
-                        $sms = array(
-                            'msg' => 1,
-                            'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
-                        );
-                        session()->set($sms);
-                        return redirect('training');
-                    }
-                } elseif ($data['trainingInfo']['trainStatus'] == "2") {
-                    if (!empty($data['admin'])) {
-                        if ($data['admin']['level'] == "2") {
-                            $year = $this->thaidate->fiscalYear($data['trainingInfo']['startDate']);
-                            $data['planList'] = $this->projectModel->planList($year);
-                            return view('planning/training/finance', $data);
-                        } else {
-                            $sms = array(
-                                'msg' => 1,
-                                'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
-                            );
-                            session()->set($sms);
-                            return redirect('training');
+                if ($data['trainingInfo']['hospcode'] == $data['user']['hospcode'] and $data['trainingInfo']['trainStatus'] == 1) {
+                    return view('planning/training/edit', $data);
+                } elseif (!empty($data['admin'])) {
+                    if ($data['trainingInfo']['trainStatus'] == 2) {
+                        foreach ($data['admin'] as $item) {
+                            if ($item->level == 2) {
+                                return view('planning/training/finance', $data);
+                            }
                         }
-                    } else {
-                        $sms = array(
-                            'msg' => 1,
-                            'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
-                        );
-                        session()->set($sms);
-                        return redirect('training');
-                    }
-                } elseif ($data['trainingInfo']['trainStatus'] == "3") {
-                    if (!empty($data['admin'])) {
-                        if ($data['admin']['level'] == "3") {
-                            $year = $this->thaidate->fiscalYear($data['trainingInfo']['startDate']);
-                            $data['planList'] = $this->projectModel->planList($year);
-                            return view('planning/training/plan', $data);
-                        } else {
-                            $sms = array(
-                                'msg' => 1,
-                                'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
-                            );
-                            session()->set($sms);
-                            return redirect('training');
+                    } elseif ($data['trainingInfo']['trainStatus'] == 3) {
+                        foreach ($data['admin'] as $item) {
+                            if ($item->level == 3) {
+                                $year = $this->thaidate->fiscalYear($data['trainingInfo']['startDate']);
+                                $data['planList'] = $this->projectModel->planList($year);
+                                return view('planning/training/plan', $data);
+                            }
                         }
                     } else {
                         $sms = array(
@@ -269,12 +232,17 @@ class Planning extends BaseController
                 } else {
                     $sms = array(
                         'msg' => 1,
-                        'info' => 'ใบงานนี้อยู่ระหว่างรอดำเนินการ กรุณาติดต่อผู้ดูแลระบบครับ!',
+                        'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!',
                     );
                     session()->set($sms);
                     return redirect('training');
                 }
             } else {
+                $sms = array(
+                    'msg' => 1,
+                    'info' => 'คุณไม่ได้รับมีสิทธิ์ให้เข้าใช้งานฟังก์ชันนี้ กรุณาติดต่อผู้ดูแลระบบครับ!2',
+                );
+                session()->set($sms);
                 return redirect('training');
             }
         } else {
@@ -343,6 +311,147 @@ class Planning extends BaseController
         }
     }
 
+    public function expectAllowance()
+    {
+        helper(['form']);
+        $data = [];
+        $json = [];
+
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+
+            $trainId = $this->request->getVar('trainId');
+            $personType = $this->request->getVar('personType');
+            $peopleNumber = $this->request->getVar('peopleNumber');
+            $dayNumber = $this->request->getVar('dayNumber');
+            $price = $this->request->getVar('price');
+
+            if (empty(trim($personType))) {
+                $json['error']['personType'] = 'กรุณาระบุประเภทบุคคล';
+            }
+            if (empty(trim($peopleNumber))) {
+                $json['error']['peopleNumber'] = 'กรุณาระบุจำนวนคน';
+            }
+            if (empty(trim($dayNumber))) {
+                $json['error']['dayNumber'] = 'กรุณาระบุจำนวนวัน';
+            }
+            if (empty(trim($price))) {
+                $json['error']['price'] = 'กรุณาระบุวันละ';
+            }
+
+            if (empty($json['error'])) {
+                $data = [
+                    'trainID' => $trainId,
+                    'personType' => $personType,
+                    'peopleNumber' => $peopleNumber,
+                    'dayNumber' => $dayNumber,
+                    'price' => $price,
+                ];
+
+                try {
+                    $lastId = $this->planningModel->createAllowance($data);
+                } catch (\Exception $e) {
+                    die($e->getMessage());
+                }
+            }
+            echo json_encode($json);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function expectHotel()
+    {
+        helper(['form']);
+        $data = [];
+        $json = [];
+
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+
+            $trainId = $this->request->getVar('trainId');
+            $roomType = $this->request->getVar('roomType');
+            $roomNumber = $this->request->getVar('roomNumber');
+            $dayNumber = $this->request->getVar('dayNumber');
+            $price = $this->request->getVar('price');
+
+            if (empty(trim($roomType))) {
+                $json['error']['roomType'] = 'กรุณาระบุประเภทห้อง';
+            }
+            if (empty(trim($roomNumber))) {
+                $json['error']['roomNumber'] = 'กรุณาระบุจำนวนห้อง';
+            }
+            if (empty(trim($dayNumber))) {
+                $json['error']['dayNumber'] = 'กรุณาระบุจำนวนวัน';
+            }
+            if (empty(trim($price))) {
+                $json['error']['price'] = 'กรุณาระบุวันละ';
+            }
+
+            if (empty($json['error'])) {
+                $data = [
+                    'trainID' => $trainId,
+                    'roomType' => $roomType,
+                    'roomNumber' => $roomNumber,
+                    'dayNumber' => $dayNumber,
+                    'price' => $price,
+                ];
+
+                try {
+                    $lastId = $this->planningModel->createHotel($data);
+                } catch (\Exception $e) {
+                    die($e->getMessage());
+                }
+            }
+            echo json_encode($json);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function expectTraveling()
+    {
+        helper(['form']);
+        $data = [];
+        $json = [];
+
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+
+            $trainId = $this->request->getVar('trainId');
+            $personType = $this->request->getVar('personType');
+            $peopleNumber = $this->request->getVar('peopleNumber');
+            $price = $this->request->getVar('price');
+
+            if (empty(trim($personType))) {
+                $json['error']['personType'] = 'กรุณาระบุประเภทบุคคล';
+            }
+            if (empty(trim($peopleNumber))) {
+                $json['error']['peopleNumber'] = 'กรุณาระบุจำนวนคน';
+            }
+            if (empty(trim($price))) {
+                $json['error']['price'] = 'กรุณาระบุจำนวนเงิน';
+            }
+
+            if (empty($json['error'])) {
+                $data = [
+                    'trainID' => $trainId,
+                    'personType' => $personType,
+                    'peopleNumber' => $peopleNumber,
+                    'price' => $price,
+                ];
+
+                try {
+                    $lastId = $this->planningModel->createTraveling($data);
+                } catch (\Exception $e) {
+                    die($e->getMessage());
+                }
+            }
+            echo json_encode($json);
+        } else {
+            return redirect('auth');
+        }
+    }
     public function trainingUpdate()
     {
         helper(['form']);
@@ -576,6 +685,160 @@ class Planning extends BaseController
             $data['breadcrumb'] = $breadcrumb;
 
             return view('planning/meeting/index', $data);
+        } else {
+            return redirect('auth');
+        }
+    }
+    public function trainingExpect($id = '')
+    {
+        $data = [];
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+            $data['admin'] = $this->userModel->adminPlanning($data['user']['hospcode']);
+            $data['title'] = 'ขออนุมัติไปราชการ';
+            $breadcrumb = [
+                "Home" => "/e-service/public/",
+                "ขออนุมัติไปราชการ" => "/e-service/public/planning/trainingEdit/$id",
+                "การยืมเงิน" => "",
+            ];
+
+            $data['breadcrumb'] = $breadcrumb;
+            $data['thaidate'] = $this->thaidate;
+            $data['trainingInfo'] = $this->planningModel->getTraining($id);
+            $data['trainingReport'] = $this->planningModel->trainingReport($id);
+            $data['moneyType'] = $this->planningModel->moneyType();
+            $data['expectInfo'] = $this->planningModel->getExpect($id);
+            $data['personType'] = $this->planningModel->personType();
+            $data['allowance'] = $this->planningModel->expectAllowance($id);
+            $data['hotel'] = $this->planningModel->expectHotel($id);
+            $data['roomType'] = $this->planningModel->roomType();
+            $data['traveling'] = $this->planningModel->expectTraveling($id);
+
+            // echo '<pre>';
+            // print_r($data);
+            // echo '</pre>';
+            // exit;
+
+            return view('planning/training/expect', $data);
+        }
+    }
+
+    public function expectAdd()
+    {
+        helper(['form']);
+        $data = [];
+        $json = [];
+
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+            $trainId = $this->request->getVar('trainId');
+            $loanNo = $this->request->getVar('loanNo');
+            $moneyNo = $this->request->getVar('moneyNo');
+            $moneyDate = $this->request->getVar('moneyDate');
+            $borrower = $this->request->getVar('borrower');
+            $moneyType = $this->request->getVar('moneyType');
+
+            if (empty(trim($loanNo))) {
+                $json['error']['loanNo'] = 'กรุณาระบุเลขที่ใบยืม';
+            }
+            if (empty(trim($moneyNo))) {
+                $json['error']['moneyNo'] = 'กรุณาระบุเงินทดลองราชการเลขที่ ';
+            }
+            if (empty(trim($moneyDate))) {
+                $json['error']['moneyDate'] = 'กรุณาระบุวันที่ยืมเงิน';
+            }
+            if (empty(trim($borrower))) {
+                $json['error']['borrower'] = 'กรุณาระบุผู้ยืมเงิน';
+            }
+            if (empty(trim($moneyType))) {
+                $json['error']['moneyType'] = 'กรุณาระบุประเภทเงินยืม';
+            }
+
+            if (empty($json['error'])) {
+                $year = $this->thaidate->fiscalYear(date("Y-m-d"));
+                $count = $this->planningModel->countExpect($year);
+
+                $data = [
+                    'trainId' => $trainId,
+                    'loanNo' => $loanNo,
+                    'moneyNo' => $moneyNo,
+                    'moneyDate' => $moneyDate,
+                    'borrower' => $borrower,
+                    'moneyType' => $moneyType,
+                    'expectDoc' => $year . "/" . ($count + 1),
+                    'update' => date("Y-m-d H:i:s"),
+                    'expectStatus' => '1',
+
+                ];
+
+                try {
+                    $checkExpect = $this->planningModel->checkExpect($trainId);
+                    if ($checkExpect == 0) {
+                        $lastId = $this->planningModel->createExpect($data);
+                    } else {
+                        $lastId = $this->planningModel->updateExpect($data, $trainId);
+                    }
+                    $json['trainId'] = $trainId;
+                } catch (\Exception $e) {
+                    die($e->getMessage());
+                }
+
+                if (!empty($lastId)) {
+
+                    $sms = array(
+                        'msg' => 0,
+                        'info' => 'คุณได้ทำการบันข้อมูลเรียบร้อย',
+                    );
+                    session()->set($sms);
+                } else {
+                    $sms = array(
+                        'msg' => 1,
+                        'info' => 'ระบบไม่สามารถทำการบันข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบครับ!',
+                    );
+                    session()->set($sms);
+                }
+            }
+
+            echo json_encode($json);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function trashAllowance()
+    {
+        $json = [];
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+            $id = $this->request->getVar('id');
+            $this->planningModel->deleteAllowance($id);
+            echo json_encode($json);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function trashHotel()
+    {
+        $json = [];
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+            $id = $this->request->getVar('id');
+            $this->planningModel->deleteHotel($id);
+            echo json_encode($json);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function trashTraveling()
+    {
+        $json = [];
+        if (session('isLoggedIn')) {
+            $data['user'] = $this->userModel->getUser(session('userId'));
+            $id = $this->request->getVar('id');
+            $this->planningModel->deleteTraveling($id);
+            echo json_encode($json);
         } else {
             return redirect('auth');
         }

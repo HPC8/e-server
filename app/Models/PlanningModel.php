@@ -11,8 +11,16 @@ class PlanningModel extends Model
     protected $tblTrainingUser = 'tbl_planning_training_user';
     protected $tblTrainingExpenses = 'tbl_planning_training_expenses';
     protected $tblTrainingMission = 'tbl_planning_training_mission';
-    protected $Employee = 'tbl_employee';
+    protected $tblMoneyType = 'tbl_money_type';
+    protected $tblExpect = 'tbl_planning_training_expect';
+    protected $tblAllowance = 'tbl_planning_training_allowance';
+    protected $tblPersonType = 'tbl_person_type';
+    protected $tblHotel = 'tbl_planning_training_hotel';
+    protected $tblRoomType = 'tbl_room_type';
+    protected $tblTraveling = 'tbl_planning_training_traveling';
 
+    protected $Employee = 'tbl_employee';
+    
     public function countTraining($year)
     {
         $builder = $this->db->table($this->tblTraining);
@@ -20,11 +28,41 @@ class PlanningModel extends Model
         return $builder->countAllResults();
     }
 
+    public function countExpect($year)
+    {
+        $builder = $this->db->table($this->tblExpect);
+        $builder->orLike('expectDoc', $year);
+        return $builder->countAllResults();
+    }
+
+    public function checkExpect($id)
+    {
+        $builder = $this->db->table($this->tblExpect);
+        $builder->where('trainID', $id);
+        return $builder->countAllResults();
+    }
+
+
     public function createTraining($data)
     {
         $builder = $this->db->table($this->tblTraining);
         $builder->insert($data);
         return $this->insertID();
+    }
+
+    public function createExpect($data)
+    {
+        $builder = $this->db->table($this->tblExpect);
+        $builder->insert($data);
+        return $this->insertID();
+    }
+
+    public function updateExpect($data, $trainId)
+    {
+        $builder = $this->db->table($this->tblExpect);
+        $builder->where('trainId', $trainId);
+        $builder->update($data);
+        return $this->affectedRows();
     }
 
     public function insertTrainingUser($data)
@@ -42,6 +80,14 @@ class PlanningModel extends Model
     public function getTraining($id)
     {
         $builder = $this->db->table($this->tblTraining);
+        $builder->where('trainID', $id);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+
+    public function getExpect($id)
+    {
+        $builder = $this->db->table($this->tblExpect);
         $builder->where('trainID', $id);
         $query = $builder->get();
         return $query->getRowArray();
@@ -109,9 +155,51 @@ class PlanningModel extends Model
         return $this->insertID();
     }
 
+    public function createAllowance($data)
+    {
+        $builder = $this->db->table($this->tblAllowance);
+        $builder->insert($data);
+        return $this->insertID();
+    }
+
+    public function createHotel($data)
+    {
+        $builder = $this->db->table($this->tblHotel);
+        $builder->insert($data);
+        return $this->insertID();
+    }
+
+    public function createTraveling($data)
+    {
+        $builder = $this->db->table($this->tblTraveling);
+        $builder->insert($data);
+        return $this->insertID();
+    }
+
     public function trainingDeleteUser($id)
     {
         $builder = $this->db->table($this->tblTrainingUser);
+        $builder->where('id', $id);
+        $builder->delete();
+    }
+
+    public function deleteAllowance($id)
+    {
+        $builder = $this->db->table($this->tblAllowance);
+        $builder->where('id', $id);
+        $builder->delete();
+    }
+
+    public function deleteHotel($id)
+    {
+        $builder = $this->db->table($this->tblHotel);
+        $builder->where('id', $id);
+        $builder->delete();
+    }
+
+    public function deleteTraveling($id)
+    {
+        $builder = $this->db->table($this->tblTraveling);
         $builder->where('id', $id);
         $builder->delete();
     }
@@ -131,4 +219,75 @@ class PlanningModel extends Model
         $builder->update($data);
         return $this->affectedRows();
     }
+    public function moneyType()
+    {
+        $builder = $this->db->table($this->tblMoneyType);
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function expectAllowance($id)
+    {
+        $builder = $this->db->table($this->tblAllowance);
+        $builder->where('trainID', $id);
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function expectHotel($id)
+    {
+        $builder = $this->db->table($this->tblHotel);
+        $builder->where('trainID', $id);
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function expectTraveling($id)
+    {
+        $builder = $this->db->table($this->tblTraveling);
+        $builder->where('trainID', $id);
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function personType()
+    {
+        $builder = $this->db->table($this->tblPersonType);
+        $query = $builder->get();
+        return $query->getResult();
+    }  
+
+    public function roomType()
+    {
+        $builder = $this->db->table($this->tblRoomType);
+        $query = $builder->get();
+        return $query->getResult();
+    }  
+
+    public function getPersonType($id)
+    {
+        if ($id != '') {
+            $builder = $this->db->table($this->tblPersonType);
+            $builder->where('id', $id);
+            $query = $builder->get();
+            $data = $query->getRowArray();
+            return $data['name'];
+        } else {
+            return "";
+        }
+    }
+
+    public function getRoomType($id)
+    {
+        if ($id != '') {
+            $builder = $this->db->table($this->tblRoomType);
+            $builder->where('id', $id);
+            $query = $builder->get();
+            $data = $query->getRowArray();
+            return $data['name'];
+        } else {
+            return "";
+        }
+    }
+    
 }

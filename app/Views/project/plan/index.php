@@ -1,25 +1,27 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
-
-<div class="page-header mb-2 pb-2 flex-column flex-sm-row align-items-start align-items-sm-center py-25 px-1">
-    <h1 class="page-title text-primary-d2 text-120">
-        <i class="fas fa-database"></i>
-        ตารางรายการแผนงาน
-    </h1>
-
-    <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
-        <div class="col-lg-12">
-            <a class="btn btn-success border-2 brc-black-tp10 radius-round px-3 <?= !empty($admin) ? '' : 'disabled' ?>" href="#" id="add-submit" data-toggle="modal" data-target="#add-plan">
-                <i class="fas fa-plus"></i>
-                เพิ่มข้อมูล
-            </a>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card bcard  border-t-2 brc-blue-m2">
+            <div class="card-header">
+                <h1 class="page-title text-primary-d2 text-120">
+                    <i class="fas fa-database"></i>
+                    ตารางรายการแผนงาน
+                    <a class="btn btn-sm btn-success border-2 brc-black-tp10 radius-round px-3 <?= !empty($admin) ? '' : 'disabled' ?>" href="#" id="add-submit" data-toggle="modal" data-target="#add-plan">
+                        <i class="fas fa-plus"></i>
+                        เพิ่มข้อมูล
+                    </a>
+                </h1>
+                <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
+                    P02-001
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="card bcard  border-t-3 brc-blue-m2">
+<div class="card bcard">
     <table id="tbl-planList" class="table table-striped table-bordered brc-black-tp11 collapsed  display" width="100%">
-
         <thead class="text-primary-d2 text-100">
             <tr>
                 <th class="all text-center">
@@ -49,14 +51,14 @@
             foreach ($planList as $row) : ?>
                 <tr>
                     <td>
-                        <?=  $no; ?>
+                        <?= $no; ?>
                     </td>
                     <td>
-                        <?=  $row->plan_name; ?>
+                        <?= $row->plan_name; ?>
                     </td>
 
                     <td>
-                        <?=  $row->plan_id; ?>
+                        <?= $row->plan_id; ?>
                     </td>
                     <td>
                         <div class='action-buttons'>

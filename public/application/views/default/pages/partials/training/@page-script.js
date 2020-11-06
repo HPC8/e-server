@@ -15,6 +15,20 @@
     },
   });
 
+  $("#expect-moneyDate").datetimepicker({
+    timepicker: false,
+    format: 'Y-m-d', // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000            
+    lang: 'th', // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
+    scrollMonth: false,
+    onSelectDate: function (dp, $input) {
+      var yearT = new Date(dp).getFullYear() - 0;
+      var yearTH = yearT + 0;
+      var fulldate = $input.val();
+      var fulldateTH = fulldate.replace(yearT, yearTH);
+      $input.val(fulldateTH);
+    },
+  });
+
   //datetimepicker วันที่มีราชการจริง
   jQuery(function () {
     jQuery('#train-startDate').datetimepicker({
@@ -82,6 +96,60 @@
               <div class='p-3 mb-0 flex-grow-1'>\
                   <h4 class='text-130'>Alert</h4>\
                   ลบรายชื่อผู้ไปราชการเรียบร้อย ...\
+              </div>\
+              <button data-dismiss='toast' class='align-self-start btn btn-xs btn-outline-grey btn-h-light-grey py-2px mr-1 mt-1 border-0 text-150'>&times;</button></div>\
+             </div>",
+
+      width: 420,
+      delay: 5000,
+
+      close: false,
+
+      className: 'bgc-white-tp1 shadow border-0',
+
+      bodyClass: 'border-0 p-0 text-dark-tp2',
+      headerClass: 'd-none',
+    })
+  }
+  function addData() {
+    $.aceToaster.add({
+      placement: 'tr',
+      body: "<div class='d-flex'>\
+              <div class='bgc-success-d1 text-white px-3 pt-3'>\
+                  <div class='border-2 brc-white px-3 py-25 radius-round'>\
+                      <i class='fa fa-check text-150'></i>\
+                  </div>\
+              </div>\
+              <div class='p-3 mb-0 flex-grow-1'>\
+                  <h4 class='text-130'>Success </h4>\
+                  เพิ่มรายการเรียบร้อย ...\
+              </div>\
+              <button data-dismiss='toast' class='align-self-start btn btn-xs btn-outline-grey btn-h-light-grey py-2px mr-1 mt-1 border-0 text-150'>&times;</button></div>\
+             </div>",
+
+      width: 420,
+      delay: 5000,
+
+      close: false,
+
+      className: 'bgc-white-tp1 shadow border-0',
+
+      bodyClass: 'border-0 p-0 text-dark-tp2',
+      headerClass: 'd-none',
+    })
+  }
+  function trashData() {
+    $.aceToaster.add({
+      placement: 'tr',
+      body: "<div class='d-flex'>\
+              <div class='bgc-danger-d1 text-white px-3 pt-3'>\
+                  <div class='border-2 brc-white px-3 py-25 radius-round'>\
+                      <i class='fa fa-times text-150'></i>\
+                  </div>\
+              </div>\
+              <div class='p-3 mb-0 flex-grow-1'>\
+                  <h4 class='text-130'>Alert</h4>\
+                  ลบรายการเรียบร้อย ...\
               </div>\
               <button data-dismiss='toast' class='align-self-start btn btn-xs btn-outline-grey btn-h-light-grey py-2px mr-1 mt-1 border-0 text-150'>&times;</button></div>\
              </div>",
@@ -534,3 +602,258 @@
       }
     });
   }
+
+  // ----------------------------------------start expect------------------------------------------------ //
+  // add expect
+  jQuery(document).on('click', 'button#add-expect', function () {
+    jQuery.ajax({
+      type: 'POST',
+      url: baseurl + 'planning/expectAdd',
+      data: jQuery("form#expect-form").serialize(),
+      dataType: 'json',
+
+      success: function (json) {
+        //console.log(json);
+        $('.text-danger').remove();
+        if (json['error']) {
+          for (i in json['error']) {
+            var element = $('.expect-' + i.replace('_', '-'));
+            if ($(element).parent().hasClass('input-group')) {
+              $(element).parent().after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            } else {
+              $(element).after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            }
+          }
+        } else {
+          //if (json['access'] != 'denied') {
+          jQuery('#loading-modal').modal();
+          setTimeout(function () {
+            location.replace(baseurl + 'planning/trainingExpect/' + json['trainId'])
+          }, 1500);
+
+          jQuery('form#expect-form').find('textarea, input').each(function () {
+            jQuery(this).val('');
+          });
+          jQuery('#add-expect').modal('hide');
+
+        }
+
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+  // set id allowance for trash 
+  jQuery(document).on('click', 'a.trash-expect-allowance', function () {
+    var id = jQuery(this).data('getid');
+    jQuery('button#trash-allowance').data('ID', id);
+  });
+
+  // trash allowance training
+  jQuery(document).on('click', 'button#trash-allowance', function () {
+    var id = jQuery(this).data('ID');
+    jQuery.ajax({
+      type: 'POST',
+      url: baseurl + 'planning/trashAllowance',
+      data: {
+        id: id
+      },
+      dataType: 'json',
+      complete: function () {
+        jQuery('#trash-allowance').modal('hide');
+      },
+      success: function (json) {
+        trashData();
+        setTimeout(function () {
+          window.location.reload(true);
+        }, 1000);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+  // add allowance
+  jQuery(document).on('click', 'button#add-allowance', function () {
+    jQuery.ajax({
+      type: 'POST',
+      url: baseurl + 'planning/expectAllowance',
+      data: jQuery("form#add-allowance-form").serialize(),
+      dataType: 'json',
+
+      success: function (json) {
+        $('.text-danger').remove();
+        if (json['error']) {
+          for (i in json['error']) {
+            var element = $('.input-' + i.replace('_', '-'));
+            if ($(element).parent().hasClass('input-group')) {
+              $(element).parent().after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            } else {
+              $(element).after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            }
+          }
+        } else {
+         
+          addData();
+          setTimeout(function () {
+            window.location.reload(true);
+          }, 1000);
+
+          jQuery('form#add-allowance-form').find('textarea, input').each(function () {
+            jQuery(this).val('');
+          });
+          jQuery('#add-allowance').modal('hide');
+
+        }
+
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+    // add hotel
+    jQuery(document).on('click', 'button#add-hotel', function () {
+      jQuery.ajax({
+        type: 'POST',
+        url: baseurl + 'planning/expectHotel',
+        data: jQuery("form#add-hotel-form").serialize(),
+        dataType: 'json',
+  
+        success: function (json) {
+          $('.text-danger').remove();
+          if (json['error']) {
+            for (i in json['error']) {
+              var element = $('.input-' + i.replace('_', '-'));
+              if ($(element).parent().hasClass('input-group')) {
+                $(element).parent().after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+              } else {
+                $(element).after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+              }
+            }
+          } else {
+           
+            addData();
+            setTimeout(function () {
+              window.location.reload(true);
+            }, 1000);
+  
+            jQuery('form#add-hotel-form').find('textarea, input').each(function () {
+              jQuery(this).val('');
+            });
+            jQuery('#add-hotel').modal('hide');
+  
+          }
+  
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+    });
+
+    // set id hotel for trash 
+  jQuery(document).on('click', 'a.trash-expect-hotel', function () {
+    var id = jQuery(this).data('getid');
+    jQuery('button#trash-hotel').data('ID', id);
+  });
+
+  // trash hotel training
+  jQuery(document).on('click', 'button#trash-hotel', function () {
+    var id = jQuery(this).data('ID');
+    jQuery.ajax({
+      type: 'POST',
+      url: baseurl + 'planning/trashHotel',
+      data: {
+        id: id
+      },
+      dataType: 'json',
+      complete: function () {
+        jQuery('#trash-hotel').modal('hide');
+      },
+      success: function (json) {
+        trashData();
+        setTimeout(function () {
+          window.location.reload(true);
+        }, 1000);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+  // add traveling
+  jQuery(document).on('click', 'button#add-traveling', function () {
+    jQuery.ajax({
+      type: 'POST',
+      url: baseurl + 'planning/expectTraveling',
+      data: jQuery("form#add-traveling-form").serialize(),
+      dataType: 'json',
+
+      success: function (json) {
+        $('.text-danger').remove();
+        if (json['error']) {
+          for (i in json['error']) {
+            var element = $('.input-' + i.replace('_', '-'));
+            if ($(element).parent().hasClass('input-group')) {
+              $(element).parent().after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            } else {
+              $(element).after('<div class="text-danger" style="font-size: 14px;">' + json['error'][i] + '</div>');
+            }
+          }
+        } else {
+         
+          addData();
+          setTimeout(function () {
+            window.location.reload(true);
+          }, 1000);
+
+          jQuery('form#add-traveling-form').find('textarea, input').each(function () {
+            jQuery(this).val('');
+          });
+          jQuery('#add-traveling').modal('hide');
+
+        }
+
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+  // set id traveling for trash 
+  jQuery(document).on('click', 'a.trash-expect-traveling', function () {
+    var id = jQuery(this).data('getid');
+    jQuery('button#trash-traveling').data('ID', id);
+  });
+
+  // trash traveling expect
+  jQuery(document).on('click', 'button#trash-traveling', function () {
+    var id = jQuery(this).data('ID');
+    jQuery.ajax({
+      type: 'POST',
+      url: baseurl + 'planning/trashTraveling',
+      data: {
+        id: id
+      },
+      dataType: 'json',
+      complete: function () {
+        jQuery('#trash-traveling').modal('hide');
+      },
+      success: function (json) {
+        trashData();
+        setTimeout(function () {
+          window.location.reload(true);
+        }, 1000);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });

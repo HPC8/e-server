@@ -96,7 +96,7 @@ class MyLibrary
             return 'This is not currency format';
         $m[2] = count($m) == 3 ? intval(('0' . $m[2]) * 100 + 0.5) : 0;
         $st = $this->cv($m[2]);
-        return $this->cv($m[1]) . 'บาท' . $st . ($st > '' ? 'สตางค์' : '');
+        return $this->cv($m[1]) . 'บาท' . $st . ($st > '' ? 'สตางค์' : 'ถ้วน');
     }
     private function cv($num)
     {

@@ -85,4 +85,8 @@
 <script type="text/javascript">
     $($('#alerts-auto').click());
     $($('#success-auto').click());
+
+    function refresh() {
+        window.location.reload(true);
+    }
 </script>

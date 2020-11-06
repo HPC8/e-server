@@ -2,13 +2,16 @@
 <?= $this->section('content') ?>
 
 <div role="main" class="container-plus">
-    <div class="border-t-3 w-100 brc-primary-m1 radius-t-1"></div>
+    <div class="border-t-2 w-100 brc-primary-m1 radius-t-1"></div>
     <div class="card bcard">
         <div class="card-header">
             <h3 class="card-title text-125">
                 <i class="fas fa-edit"></i>
                 แบบฟอร์มขออนุมัติไปราชการ
             </h3>
+            <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
+                P06-002
+            </div>
         </div>
 
         <div class="card-body px-3 pb-1">
@@ -345,11 +348,15 @@
 
                 <div class="mt-5 border-t-1 brc-secondary-l2 py-35 mx-n25">
                     <div class="text-center">
-                        <button type="button" id="add-training" class="btn btn-info border-2 brc-black-tp10 radius-round px-3 mb-1">
-                            <i class="far fa-save text-120 mr-1"></i>
+                        <a href="javascript:history.back();" class="btn btn-secondary border-2 brc-black-tp10 radius-round px-3 mb-1">
+                            <i class="fas fa-undo-alt text-120 mr-1"></i>
+                            ย้อนกลับ
+                        </a>
+                        <button type="button" id="add-training" class="btn btn-success border-2 brc-black-tp10 radius-round px-3 mb-1">
+                            <i class="fas fa-download text-120 mr-1"></i>
                             บันทึกข้อมูล
                         </button>
-                        <button type="reset" class="btn btn-secondary border-2 brc-black-tp10 radius-round px-3 mb-1">
+                        <button type="button" onClick="refresh()" class="btn btn-warning border-2 brc-black-tp10 radius-round px-3 mb-1">
                             <i class="fas fa-redo-alt text-120 mr-1"></i>
                             ล้างข้อมูล
                         </button>

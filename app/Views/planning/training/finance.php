@@ -8,7 +8,7 @@
             <h3 class="card-title text-125">
                 <i class="fas fa-edit"></i>
                 แบบฟอร์มขออนุมัติไปราชการ
-                <small class="text-danger"> (ตรวจสอบการค่าใช้จ่าย)</small>
+                <small class="text-danger"> (ตรวจสอบรายการค่าใช้จ่าย)</small>
             </h3>
         </div>
 
@@ -350,16 +350,20 @@
 
                 <div class="mt-5 border-t-1 brc-secondary-l2 py-35 mx-n25">
                     <div class="text-center">
-                        <fieldset disabled>
-                            <button type="button" id="update-training" class="btn btn-info border-2 brc-black-tp10 radius-round px-3 mb-1">
-                                <i class="far fa-save text-120 mr-1"></i>
-                                บันทึกข้อมูล
-                            </button>
-                            <button type="button" id="confirm-training" class="btn btn-success border-2 brc-black-tp10 radius-round px-3 mb-1">
-                                <i class="far fa-check-square text-120 mr-1"></i>
-                                ยืนยันข้อมูล
-                            </button>
-                        </fieldset>
+
+                        <a href="javascript:history.back();" class="btn btn-secondary border-2 brc-black-tp10 radius-round px-3 mb-1">
+                            <i class="fas fa-undo-alt text-120 mr-1"></i>
+                            ย้อนกลับ
+                        </a>
+                        <button type="button" id="update-training" class="btn btn-success border-2 brc-black-tp10 radius-round px-3 mb-1">
+                            <i class="fas fa-download text-120 mr-1"></i>
+                            บันทึกข้อมูล
+                        </button>
+                        <button type="button" id="confirm-training" class="btn btn-info border-2 brc-black-tp10 radius-round px-3 mb-1">
+                            <i class="far fa-check-square text-120 mr-1"></i>
+                            ยืนยันข้อมูล
+                        </button>
+
                     </div>
                 </div>
             </form>

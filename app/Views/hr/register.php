@@ -9,7 +9,11 @@
                 <i class="fas fa-user-plus text-dark-l3 mr-1"></i>
                 เพิ่มข้อมูลบุคลากร
             </h3>
+            <div class="page-tools mt-3 mt-sm-0 mb-sm-n1">
+                P01-001
+            </div>
         </div>
+
 
         <div class="card-body px-3 pb-1">
             <form class="mt-lg-3" autocomplete="off" id="hr-register-form" method="post">
@@ -469,11 +473,15 @@
 
                 <div class="mt-5 border-t-1 brc-secondary-l2 py-35 mx-n25">
                     <div class="text-center">
-                        <button type="button" id="add-submit" class="btn btn-info border-2 brc-black-tp10 radius-round px-3 mb-1">
-                            <i class="far fa-save text-120 mr-1"></i>
+                        <a href="javascript:history.back();" class="btn btn-secondary border-2 brc-black-tp10 radius-round px-3 mb-1">
+                            <i class="fas fa-undo-alt text-120 mr-1"></i>
+                            ย้อนกลับ
+                        </a>
+                        <button type="button" id="add-submit" class="btn btn-success border-2 brc-black-tp10 radius-round px-3 mb-1">
+                            <i class="fas fa-download text-120 mr-1"></i>
                             บันทึกข้อมูล
                         </button>
-                        <button type="reset" class="btn btn-secondary border-2 brc-black-tp10 radius-round px-3 mb-1">
+                        <button type="button" onClick="refresh()" class="btn btn-warning border-2 brc-black-tp10 radius-round px-3 mb-1">
                             <i class="fas fa-redo-alt text-120 mr-1"></i>
                             ล้างข้อมูล
                         </button>
